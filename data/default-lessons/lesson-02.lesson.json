@@ -1,0 +1,513 @@
+{
+  "schemaVersion": 1,
+  "id": "basic-vocabulary-01",
+  "order": 2,
+  "title": "Từ vựng cơ bản",
+  "description": "Nhìn nghĩa tiếng Việt, chọn từ tiếng Anh.",
+  "level": "A1",
+  "published": true,
+  "audio": {
+    "enabled": true,
+    "mode": "tts",
+    "rate": 0.85
+  },
+  "vocabulary": [
+    {
+      "word": "I",
+      "ipa": "/aɪ/",
+      "meaning": "tôi",
+      "speak": "I"
+    },
+    {
+      "word": "you",
+      "ipa": "/juː/",
+      "meaning": "bạn",
+      "speak": "you"
+    },
+    {
+      "word": "he",
+      "ipa": "/hiː/",
+      "meaning": "anh ấy",
+      "speak": "he"
+    },
+    {
+      "word": "she",
+      "ipa": "/ʃiː/",
+      "meaning": "cô ấy",
+      "speak": "she"
+    },
+    {
+      "word": "it",
+      "ipa": "/ɪt/",
+      "meaning": "nó",
+      "speak": "it"
+    },
+    {
+      "word": "we",
+      "ipa": "/wiː/",
+      "meaning": "chúng tôi",
+      "speak": "we"
+    },
+    {
+      "word": "they",
+      "ipa": "/ðeɪ/",
+      "meaning": "họ",
+      "speak": "they"
+    },
+    {
+      "word": "this",
+      "ipa": "/ðɪs/",
+      "meaning": "cái này",
+      "speak": "this"
+    },
+    {
+      "word": "that",
+      "ipa": "/ðæt/",
+      "meaning": "cái kia",
+      "speak": "that"
+    },
+    {
+      "word": "here",
+      "ipa": "/hɪə(r)/",
+      "meaning": "ở đây",
+      "speak": "here"
+    },
+    {
+      "word": "there",
+      "ipa": "/ðeə(r)/",
+      "meaning": "ở đó",
+      "speak": "there"
+    },
+    {
+      "word": "yes",
+      "ipa": "/jes/",
+      "meaning": "có, vâng",
+      "speak": "yes"
+    },
+    {
+      "word": "no",
+      "ipa": "/nəʊ/",
+      "meaning": "không",
+      "speak": "no"
+    },
+    {
+      "word": "please",
+      "ipa": "/pliːz/",
+      "meaning": "làm ơn",
+      "speak": "please"
+    },
+    {
+      "word": "thanks",
+      "ipa": "/θæŋks/",
+      "meaning": "cảm ơn",
+      "speak": "thanks"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"tôi\"?",
+      "display": "tôi",
+      "speak": "I",
+      "options": [
+        {
+          "id": "A",
+          "text": "you"
+        },
+        {
+          "id": "B",
+          "text": "she"
+        },
+        {
+          "id": "C",
+          "text": "I"
+        },
+        {
+          "id": "D",
+          "text": "we"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "tôi = I"
+    },
+    {
+      "id": "q2",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"bạn\"?",
+      "display": "bạn",
+      "speak": "you",
+      "options": [
+        {
+          "id": "A",
+          "text": "he"
+        },
+        {
+          "id": "B",
+          "text": "it"
+        },
+        {
+          "id": "C",
+          "text": "they"
+        },
+        {
+          "id": "D",
+          "text": "you"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "bạn = you"
+    },
+    {
+      "id": "q3",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"anh ấy\"?",
+      "display": "anh ấy",
+      "speak": "he",
+      "options": [
+        {
+          "id": "A",
+          "text": "he"
+        },
+        {
+          "id": "B",
+          "text": "she"
+        },
+        {
+          "id": "C",
+          "text": "we"
+        },
+        {
+          "id": "D",
+          "text": "this"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "anh ấy = he"
+    },
+    {
+      "id": "q4",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"cô ấy\"?",
+      "display": "cô ấy",
+      "speak": "she",
+      "options": [
+        {
+          "id": "A",
+          "text": "it"
+        },
+        {
+          "id": "B",
+          "text": "she"
+        },
+        {
+          "id": "C",
+          "text": "they"
+        },
+        {
+          "id": "D",
+          "text": "that"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "cô ấy = she"
+    },
+    {
+      "id": "q5",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"nó\"?",
+      "display": "nó",
+      "speak": "it",
+      "options": [
+        {
+          "id": "A",
+          "text": "we"
+        },
+        {
+          "id": "B",
+          "text": "this"
+        },
+        {
+          "id": "C",
+          "text": "it"
+        },
+        {
+          "id": "D",
+          "text": "here"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "nó = it"
+    },
+    {
+      "id": "q6",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"chúng tôi\"?",
+      "display": "chúng tôi",
+      "speak": "we",
+      "options": [
+        {
+          "id": "A",
+          "text": "they"
+        },
+        {
+          "id": "B",
+          "text": "that"
+        },
+        {
+          "id": "C",
+          "text": "there"
+        },
+        {
+          "id": "D",
+          "text": "we"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "chúng tôi = we"
+    },
+    {
+      "id": "q7",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"họ\"?",
+      "display": "họ",
+      "speak": "they",
+      "options": [
+        {
+          "id": "A",
+          "text": "they"
+        },
+        {
+          "id": "B",
+          "text": "this"
+        },
+        {
+          "id": "C",
+          "text": "here"
+        },
+        {
+          "id": "D",
+          "text": "yes"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "họ = they"
+    },
+    {
+      "id": "q8",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"cái này\"?",
+      "display": "cái này",
+      "speak": "this",
+      "options": [
+        {
+          "id": "A",
+          "text": "that"
+        },
+        {
+          "id": "B",
+          "text": "this"
+        },
+        {
+          "id": "C",
+          "text": "there"
+        },
+        {
+          "id": "D",
+          "text": "no"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "cái này = this"
+    },
+    {
+      "id": "q9",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"cái kia\"?",
+      "display": "cái kia",
+      "speak": "that",
+      "options": [
+        {
+          "id": "A",
+          "text": "here"
+        },
+        {
+          "id": "B",
+          "text": "yes"
+        },
+        {
+          "id": "C",
+          "text": "that"
+        },
+        {
+          "id": "D",
+          "text": "please"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "cái kia = that"
+    },
+    {
+      "id": "q10",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"ở đây\"?",
+      "display": "ở đây",
+      "speak": "here",
+      "options": [
+        {
+          "id": "A",
+          "text": "there"
+        },
+        {
+          "id": "B",
+          "text": "no"
+        },
+        {
+          "id": "C",
+          "text": "thanks"
+        },
+        {
+          "id": "D",
+          "text": "here"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "ở đây = here"
+    },
+    {
+      "id": "q11",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"ở đó\"?",
+      "display": "ở đó",
+      "speak": "there",
+      "options": [
+        {
+          "id": "A",
+          "text": "there"
+        },
+        {
+          "id": "B",
+          "text": "yes"
+        },
+        {
+          "id": "C",
+          "text": "please"
+        },
+        {
+          "id": "D",
+          "text": "I"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "ở đó = there"
+    },
+    {
+      "id": "q12",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"có, vâng\"?",
+      "display": "có, vâng",
+      "speak": "yes",
+      "options": [
+        {
+          "id": "A",
+          "text": "no"
+        },
+        {
+          "id": "B",
+          "text": "yes"
+        },
+        {
+          "id": "C",
+          "text": "thanks"
+        },
+        {
+          "id": "D",
+          "text": "you"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "có, vâng = yes"
+    },
+    {
+      "id": "q13",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"không\"?",
+      "display": "không",
+      "speak": "no",
+      "options": [
+        {
+          "id": "A",
+          "text": "please"
+        },
+        {
+          "id": "B",
+          "text": "I"
+        },
+        {
+          "id": "C",
+          "text": "no"
+        },
+        {
+          "id": "D",
+          "text": "he"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "không = no"
+    },
+    {
+      "id": "q14",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"làm ơn\"?",
+      "display": "làm ơn",
+      "speak": "please",
+      "options": [
+        {
+          "id": "A",
+          "text": "thanks"
+        },
+        {
+          "id": "B",
+          "text": "you"
+        },
+        {
+          "id": "C",
+          "text": "she"
+        },
+        {
+          "id": "D",
+          "text": "please"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "làm ơn = please"
+    },
+    {
+      "id": "q15",
+      "type": "meaning_to_word",
+      "prompt": "Từ tiếng Anh nào có nghĩa là \"cảm ơn\"?",
+      "display": "cảm ơn",
+      "speak": "thanks",
+      "options": [
+        {
+          "id": "A",
+          "text": "thanks"
+        },
+        {
+          "id": "B",
+          "text": "I"
+        },
+        {
+          "id": "C",
+          "text": "he"
+        },
+        {
+          "id": "D",
+          "text": "it"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "cảm ơn = thanks"
+    }
+  ]
+}

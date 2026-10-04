@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "my-lesson-01",
+  "order": 10,
+  "title": "Tên bài học",
+  "description": "Mô tả ngắn về bài học",
+  "level": "A1",
+  "published": false,
+  "audio": {
+    "enabled": true,
+    "mode": "tts",
+    "rate": 0.85
+  },
+  "vocabulary": [
+    { "word": "they", "ipa": "/ðeɪ/", "meaning": "họ", "speak": "they" },
+    { "word": "she", "ipa": "/ʃiː/", "meaning": "cô ấy", "speak": "she" }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "type": "word_to_meaning",
+      "prompt": "\"they\" nghĩa là gì?",
+      "display": "they",
+      "speak": "they",
+      "options": [
+        { "id": "A", "text": "tôi" },
+        { "id": "B", "text": "họ" },
+        { "id": "C", "text": "chúng tôi" },
+        { "id": "D", "text": "cô ấy" }
+      ],
+      "correctAnswer": "B",
+      "explanation": "they = họ"
+    },
+    {
+      "id": "q2",
+      "type": "listen_choose",
+      "prompt": "Nghe và chọn từ đúng",
+      "speak": "she",
+      "options": [
+        { "id": "A", "text": "he" },
+        { "id": "B", "text": "she" },
+        { "id": "C", "text": "we" },
+        { "id": "D", "text": "they" }
+      ],
+      "correctAnswer": "B"
+    },
+    {
+      "id": "q3",
+      "type": "fill_blank",
+      "prompt": "Gõ từ còn thiếu vào chỗ trống.",
+      "display": "Lan is a girl. ___ is my friend.",
+      "speakSentence": "Lan is a girl. She is my friend.",
+      "correctAnswer": "She",
+      "acceptedAnswers": ["she"],
+      "explanation": "Lan là nữ nên dùng She."
+    }
+  ]
+}

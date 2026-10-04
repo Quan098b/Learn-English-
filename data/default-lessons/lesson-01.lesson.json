@@ -1,0 +1,327 @@
+{
+  "schemaVersion": 1,
+  "id": "pronouns-01",
+  "order": 1,
+  "title": "Đại từ nhân xưng",
+  "description": "Học và luyện các đại từ I, you, he, she, it, we, they.",
+  "level": "A1",
+  "published": true,
+  "audio": {
+    "enabled": true,
+    "mode": "tts",
+    "rate": 0.85
+  },
+  "vocabulary": [
+    {
+      "word": "I",
+      "ipa": "/aɪ/",
+      "meaning": "tôi",
+      "speak": "I"
+    },
+    {
+      "word": "you",
+      "ipa": "/juː/",
+      "meaning": "bạn",
+      "speak": "you"
+    },
+    {
+      "word": "he",
+      "ipa": "/hiː/",
+      "meaning": "anh ấy",
+      "speak": "he"
+    },
+    {
+      "word": "she",
+      "ipa": "/ʃiː/",
+      "meaning": "cô ấy",
+      "speak": "she"
+    },
+    {
+      "word": "it",
+      "ipa": "/ɪt/",
+      "meaning": "nó",
+      "speak": "it"
+    },
+    {
+      "word": "we",
+      "ipa": "/wiː/",
+      "meaning": "chúng tôi",
+      "speak": "we"
+    },
+    {
+      "word": "they",
+      "ipa": "/ðeɪ/",
+      "meaning": "họ",
+      "speak": "they"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "type": "word_to_meaning",
+      "prompt": "\"I\" nghĩa là gì?",
+      "display": "I",
+      "speak": "I",
+      "options": [
+        {
+          "id": "A",
+          "text": "Tôi"
+        },
+        {
+          "id": "B",
+          "text": "Bạn"
+        },
+        {
+          "id": "C",
+          "text": "Cô ấy"
+        },
+        {
+          "id": "D",
+          "text": "Chúng tôi"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "I = tôi"
+    },
+    {
+      "id": "q2",
+      "type": "word_to_meaning",
+      "prompt": "\"You\" nghĩa là gì?",
+      "display": "you",
+      "speak": "you",
+      "options": [
+        {
+          "id": "A",
+          "text": "Anh ấy"
+        },
+        {
+          "id": "B",
+          "text": "Bạn"
+        },
+        {
+          "id": "C",
+          "text": "Nó"
+        },
+        {
+          "id": "D",
+          "text": "Họ"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "you = bạn"
+    },
+    {
+      "id": "q3",
+      "type": "word_to_meaning",
+      "prompt": "\"He\" nghĩa là gì?",
+      "display": "he",
+      "speak": "he",
+      "options": [
+        {
+          "id": "A",
+          "text": "Cô ấy"
+        },
+        {
+          "id": "B",
+          "text": "Chúng tôi"
+        },
+        {
+          "id": "C",
+          "text": "Anh ấy"
+        },
+        {
+          "id": "D",
+          "text": "Tôi"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "he = anh ấy"
+    },
+    {
+      "id": "q4",
+      "type": "word_to_meaning",
+      "prompt": "\"She\" nghĩa là gì?",
+      "display": "she",
+      "speak": "she",
+      "options": [
+        {
+          "id": "A",
+          "text": "Nó"
+        },
+        {
+          "id": "B",
+          "text": "Họ"
+        },
+        {
+          "id": "C",
+          "text": "Bạn"
+        },
+        {
+          "id": "D",
+          "text": "Cô ấy"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "she = cô ấy"
+    },
+    {
+      "id": "q5",
+      "type": "word_to_meaning",
+      "prompt": "\"It\" nghĩa là gì?",
+      "display": "it",
+      "speak": "it",
+      "options": [
+        {
+          "id": "A",
+          "text": "Nó"
+        },
+        {
+          "id": "B",
+          "text": "Chúng tôi"
+        },
+        {
+          "id": "C",
+          "text": "Tôi"
+        },
+        {
+          "id": "D",
+          "text": "Anh ấy"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "it = nó"
+    },
+    {
+      "id": "q6",
+      "type": "word_to_meaning",
+      "prompt": "\"We\" nghĩa là gì?",
+      "display": "we",
+      "speak": "we",
+      "options": [
+        {
+          "id": "A",
+          "text": "Họ"
+        },
+        {
+          "id": "B",
+          "text": "Chúng tôi"
+        },
+        {
+          "id": "C",
+          "text": "Bạn"
+        },
+        {
+          "id": "D",
+          "text": "Cô ấy"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "we = chúng tôi"
+    },
+    {
+      "id": "q7",
+      "type": "word_to_meaning",
+      "prompt": "\"They\" nghĩa là gì?",
+      "display": "they",
+      "speak": "they",
+      "options": [
+        {
+          "id": "A",
+          "text": "Tôi"
+        },
+        {
+          "id": "B",
+          "text": "Anh ấy"
+        },
+        {
+          "id": "C",
+          "text": "Họ"
+        },
+        {
+          "id": "D",
+          "text": "Nó"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "they = họ"
+    },
+    {
+      "id": "q8",
+      "type": "listen_choose",
+      "prompt": "Nghe và chọn từ đúng",
+      "speak": "she",
+      "options": [
+        {
+          "id": "A",
+          "text": "it"
+        },
+        {
+          "id": "B",
+          "text": "she"
+        },
+        {
+          "id": "C",
+          "text": "they"
+        },
+        {
+          "id": "D",
+          "text": "you"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "she = cô ấy"
+    },
+    {
+      "id": "q9",
+      "type": "listen_choose",
+      "prompt": "Nghe và chọn từ đúng",
+      "speak": "we",
+      "options": [
+        {
+          "id": "A",
+          "text": "they"
+        },
+        {
+          "id": "B",
+          "text": "you"
+        },
+        {
+          "id": "C",
+          "text": "we"
+        },
+        {
+          "id": "D",
+          "text": "she"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "we = chúng tôi"
+    },
+    {
+      "id": "q10",
+      "type": "listen_choose",
+      "prompt": "Nghe và chọn từ đúng",
+      "speak": "they",
+      "options": [
+        {
+          "id": "A",
+          "text": "I"
+        },
+        {
+          "id": "B",
+          "text": "he"
+        },
+        {
+          "id": "C",
+          "text": "it"
+        },
+        {
+          "id": "D",
+          "text": "they"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "they = họ"
+    }
+  ]
+}

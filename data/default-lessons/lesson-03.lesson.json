@@ -1,0 +1,513 @@
+{
+  "schemaVersion": 1,
+  "id": "ipa-01",
+  "order": 3,
+  "title": "Phiên âm IPA",
+  "description": "Nhận ra từ qua phiên âm quốc tế.",
+  "level": "A1",
+  "published": true,
+  "audio": {
+    "enabled": true,
+    "mode": "tts",
+    "rate": 0.85
+  },
+  "vocabulary": [
+    {
+      "word": "I",
+      "ipa": "/aɪ/",
+      "meaning": "tôi",
+      "speak": "I"
+    },
+    {
+      "word": "you",
+      "ipa": "/juː/",
+      "meaning": "bạn",
+      "speak": "you"
+    },
+    {
+      "word": "he",
+      "ipa": "/hiː/",
+      "meaning": "anh ấy",
+      "speak": "he"
+    },
+    {
+      "word": "she",
+      "ipa": "/ʃiː/",
+      "meaning": "cô ấy",
+      "speak": "she"
+    },
+    {
+      "word": "it",
+      "ipa": "/ɪt/",
+      "meaning": "nó",
+      "speak": "it"
+    },
+    {
+      "word": "we",
+      "ipa": "/wiː/",
+      "meaning": "chúng tôi",
+      "speak": "we"
+    },
+    {
+      "word": "they",
+      "ipa": "/ðeɪ/",
+      "meaning": "họ",
+      "speak": "they"
+    },
+    {
+      "word": "this",
+      "ipa": "/ðɪs/",
+      "meaning": "cái này",
+      "speak": "this"
+    },
+    {
+      "word": "that",
+      "ipa": "/ðæt/",
+      "meaning": "cái kia",
+      "speak": "that"
+    },
+    {
+      "word": "here",
+      "ipa": "/hɪə(r)/",
+      "meaning": "ở đây",
+      "speak": "here"
+    },
+    {
+      "word": "there",
+      "ipa": "/ðeə(r)/",
+      "meaning": "ở đó",
+      "speak": "there"
+    },
+    {
+      "word": "yes",
+      "ipa": "/jes/",
+      "meaning": "có, vâng",
+      "speak": "yes"
+    },
+    {
+      "word": "no",
+      "ipa": "/nəʊ/",
+      "meaning": "không",
+      "speak": "no"
+    },
+    {
+      "word": "please",
+      "ipa": "/pliːz/",
+      "meaning": "làm ơn",
+      "speak": "please"
+    },
+    {
+      "word": "thanks",
+      "ipa": "/θæŋks/",
+      "meaning": "cảm ơn",
+      "speak": "thanks"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /aɪ/?",
+      "display": "/aɪ/",
+      "speak": "I",
+      "options": [
+        {
+          "id": "A",
+          "text": "you"
+        },
+        {
+          "id": "B",
+          "text": "I"
+        },
+        {
+          "id": "C",
+          "text": "she"
+        },
+        {
+          "id": "D",
+          "text": "we"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "/aɪ/ là cách đọc của \"I\"."
+    },
+    {
+      "id": "q2",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /juː/?",
+      "display": "/juː/",
+      "speak": "you",
+      "options": [
+        {
+          "id": "A",
+          "text": "he"
+        },
+        {
+          "id": "B",
+          "text": "it"
+        },
+        {
+          "id": "C",
+          "text": "you"
+        },
+        {
+          "id": "D",
+          "text": "they"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "/juː/ là cách đọc của \"you\"."
+    },
+    {
+      "id": "q3",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /hiː/?",
+      "display": "/hiː/",
+      "speak": "he",
+      "options": [
+        {
+          "id": "A",
+          "text": "she"
+        },
+        {
+          "id": "B",
+          "text": "we"
+        },
+        {
+          "id": "C",
+          "text": "this"
+        },
+        {
+          "id": "D",
+          "text": "he"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "/hiː/ là cách đọc của \"he\"."
+    },
+    {
+      "id": "q4",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /ʃiː/?",
+      "display": "/ʃiː/",
+      "speak": "she",
+      "options": [
+        {
+          "id": "A",
+          "text": "she"
+        },
+        {
+          "id": "B",
+          "text": "it"
+        },
+        {
+          "id": "C",
+          "text": "they"
+        },
+        {
+          "id": "D",
+          "text": "that"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "/ʃiː/ là cách đọc của \"she\"."
+    },
+    {
+      "id": "q5",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /ɪt/?",
+      "display": "/ɪt/",
+      "speak": "it",
+      "options": [
+        {
+          "id": "A",
+          "text": "we"
+        },
+        {
+          "id": "B",
+          "text": "it"
+        },
+        {
+          "id": "C",
+          "text": "this"
+        },
+        {
+          "id": "D",
+          "text": "here"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "/ɪt/ là cách đọc của \"it\"."
+    },
+    {
+      "id": "q6",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /wiː/?",
+      "display": "/wiː/",
+      "speak": "we",
+      "options": [
+        {
+          "id": "A",
+          "text": "they"
+        },
+        {
+          "id": "B",
+          "text": "that"
+        },
+        {
+          "id": "C",
+          "text": "we"
+        },
+        {
+          "id": "D",
+          "text": "there"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "/wiː/ là cách đọc của \"we\"."
+    },
+    {
+      "id": "q7",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /ðeɪ/?",
+      "display": "/ðeɪ/",
+      "speak": "they",
+      "options": [
+        {
+          "id": "A",
+          "text": "this"
+        },
+        {
+          "id": "B",
+          "text": "here"
+        },
+        {
+          "id": "C",
+          "text": "yes"
+        },
+        {
+          "id": "D",
+          "text": "they"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "/ðeɪ/ là cách đọc của \"they\"."
+    },
+    {
+      "id": "q8",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /ðɪs/?",
+      "display": "/ðɪs/",
+      "speak": "this",
+      "options": [
+        {
+          "id": "A",
+          "text": "this"
+        },
+        {
+          "id": "B",
+          "text": "that"
+        },
+        {
+          "id": "C",
+          "text": "there"
+        },
+        {
+          "id": "D",
+          "text": "no"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "/ðɪs/ là cách đọc của \"this\"."
+    },
+    {
+      "id": "q9",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /ðæt/?",
+      "display": "/ðæt/",
+      "speak": "that",
+      "options": [
+        {
+          "id": "A",
+          "text": "here"
+        },
+        {
+          "id": "B",
+          "text": "that"
+        },
+        {
+          "id": "C",
+          "text": "yes"
+        },
+        {
+          "id": "D",
+          "text": "please"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "/ðæt/ là cách đọc của \"that\"."
+    },
+    {
+      "id": "q10",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /hɪə(r)/?",
+      "display": "/hɪə(r)/",
+      "speak": "here",
+      "options": [
+        {
+          "id": "A",
+          "text": "there"
+        },
+        {
+          "id": "B",
+          "text": "no"
+        },
+        {
+          "id": "C",
+          "text": "here"
+        },
+        {
+          "id": "D",
+          "text": "thanks"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "/hɪə(r)/ là cách đọc của \"here\"."
+    },
+    {
+      "id": "q11",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /ðeə(r)/?",
+      "display": "/ðeə(r)/",
+      "speak": "there",
+      "options": [
+        {
+          "id": "A",
+          "text": "yes"
+        },
+        {
+          "id": "B",
+          "text": "please"
+        },
+        {
+          "id": "C",
+          "text": "I"
+        },
+        {
+          "id": "D",
+          "text": "there"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "/ðeə(r)/ là cách đọc của \"there\"."
+    },
+    {
+      "id": "q12",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /jes/?",
+      "display": "/jes/",
+      "speak": "yes",
+      "options": [
+        {
+          "id": "A",
+          "text": "yes"
+        },
+        {
+          "id": "B",
+          "text": "no"
+        },
+        {
+          "id": "C",
+          "text": "thanks"
+        },
+        {
+          "id": "D",
+          "text": "you"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "/jes/ là cách đọc của \"yes\"."
+    },
+    {
+      "id": "q13",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /nəʊ/?",
+      "display": "/nəʊ/",
+      "speak": "no",
+      "options": [
+        {
+          "id": "A",
+          "text": "please"
+        },
+        {
+          "id": "B",
+          "text": "no"
+        },
+        {
+          "id": "C",
+          "text": "I"
+        },
+        {
+          "id": "D",
+          "text": "he"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "/nəʊ/ là cách đọc của \"no\"."
+    },
+    {
+      "id": "q14",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /pliːz/?",
+      "display": "/pliːz/",
+      "speak": "please",
+      "options": [
+        {
+          "id": "A",
+          "text": "thanks"
+        },
+        {
+          "id": "B",
+          "text": "you"
+        },
+        {
+          "id": "C",
+          "text": "please"
+        },
+        {
+          "id": "D",
+          "text": "she"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "/pliːz/ là cách đọc của \"please\"."
+    },
+    {
+      "id": "q15",
+      "type": "ipa_to_word",
+      "prompt": "Từ nào có phiên âm /θæŋks/?",
+      "display": "/θæŋks/",
+      "speak": "thanks",
+      "options": [
+        {
+          "id": "A",
+          "text": "I"
+        },
+        {
+          "id": "B",
+          "text": "he"
+        },
+        {
+          "id": "C",
+          "text": "it"
+        },
+        {
+          "id": "D",
+          "text": "thanks"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "/θæŋks/ là cách đọc của \"thanks\"."
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "admins": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": false
+      }
+    },
+
+    "lessons": {
+      ".read": "auth != null && (root.child('admins').child(auth.uid).val() === true || (query.orderByChild === 'published' && query.equalTo === true))",
+      ".indexOn": ["published"],
+      "$lessonId": {
+        ".read": "auth != null && data.child('published').val() === true",
+        ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+        ".validate": "$lessonId.matches(/^[a-z0-9_-]{1,64}$/) && newData.hasChildren(['schemaVersion', 'order', 'title', 'level', 'published', 'questions'])",
+        "schemaVersion": { ".validate": "newData.val() === 1" },
+        "order": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100000" },
+        "title": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120" },
+        "description": { ".validate": "newData.isString() && newData.val().length <= 500" },
+        "level": { ".validate": "newData.isString() && newData.val().matches(/^(A1|A2|B1|B2|C1|C2)$/)" },
+        "published": { ".validate": "newData.isBoolean()" },
+        "audio": { ".validate": "newData.hasChildren(['enabled', 'mode'])" },
+        "vocabulary": { ".validate": "newData.hasChildren()" },
+        "questions": { ".validate": "newData.hasChildren()" },
+        "$other": { ".validate": false }
+      }
+    },
+
+    "users": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid && newData.exists()",
+        ".validate": "newData.hasChildren(['name', 'lastActiveAt'])",
+        "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 30 && !newData.val().matches(/^ *$/)" },
+        "lastActiveAt": { ".validate": "newData.isNumber() && newData.val() <= now" },
+        "$other": { ".validate": false }
+      }
+    },
+
+    "presenceSessions": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid",
+        "$sessionId": {
+          ".validate": "$sessionId.matches(/^s_[a-f0-9]{24}$/) && newData.hasChildren(['name', 'online', 'state', 'currentQuestion', 'totalQuestions', 'progress', 'attemptNumber', 'connectedAt', 'lastSeen', 'updatedAt']) && (newData.child('state').val() === 'viewing' || newData.hasChildren(['exerciseId', 'exerciseTitle']))",
+          "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 30 && !newData.val().matches(/^ *$/)" },
+          "online": { ".validate": "newData.val() === true" },
+          "state": { ".validate": "newData.val() === 'viewing' || newData.val() === 'doing'" },
+          "exerciseId": { ".validate": "newData.isString() && newData.val().matches(/^[a-z0-9_-]{1,64}$/)" },
+          "exerciseTitle": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120" },
+          "currentQuestion": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 200" },
+          "totalQuestions": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 200" },
+          "progress": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100" },
+          "attemptNumber": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+          "attemptStartedAt": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+          "connectedAt": { ".validate": "newData.isNumber() && newData.val() <= now" },
+          "lastSeen": { ".validate": "newData.isNumber() && newData.val() <= now && newData.val() > now - 60000" },
+          "updatedAt": { ".validate": "newData.isNumber() && newData.val() <= now" },
+          "$other": { ".validate": false }
+        }
+      }
+    },
+
+    "attempts": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$exerciseId": {
+          "$attemptId": {
+            ".write": "auth != null && auth.uid === $uid && newData.exists() && (!data.exists() || data.child('status').val() === 'in_progress')",
+            ".validate": "$exerciseId.matches(/^[a-z0-9_-]{1,64}$/) && newData.hasChildren(['userName', 'exerciseTitle', 'attemptNumber', 'startedAt', 'correctAnswers', 'totalQuestions', 'score', 'durationMs', 'status'])",
+            "userName": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 30" },
+            "exerciseTitle": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120" },
+            "attemptNumber": { ".validate": "newData.isNumber() && newData.val() >= 1 && (!data.exists() || newData.val() === data.val())" },
+            "startedAt": { ".validate": "newData.isNumber() && (data.exists() ? newData.val() === data.val() : (newData.val() <= now && newData.val() > now - 60000))" },
+            "finishedAt": { ".validate": "newData.isNumber() && newData.val() <= now" },
+            "correctAnswers": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 200" },
+            "totalQuestions": { ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 200" },
+            "score": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100" },
+            "durationMs": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+            "status": { ".validate": "(newData.val() === 'in_progress' && (!data.exists() || data.val() === 'in_progress')) || (data.val() === 'in_progress' && (newData.val() === 'completed' || newData.val() === 'abandoned'))" },
+            "$other": { ".validate": false }
+          }
+        }
+      }
+    },
+
+    "userExerciseStats": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$exerciseId": {
+          ".write": "auth != null && auth.uid === $uid && newData.exists()",
+          ".validate": "$exerciseId.matches(/^[a-z0-9_-]{1,64}$/) && newData.hasChildren(['userName', 'exerciseTitle', 'attemptCount', 'completedCount', 'lastAttemptAt']) && (newData.child('attemptCount').val() === (data.exists() ? data.child('attemptCount').val() : 0) + 1 || (data.exists() && newData.child('attemptCount').val() === data.child('attemptCount').val())) && (newData.child('completedCount').val() === (data.exists() ? data.child('completedCount').val() : 0) || newData.child('completedCount').val() === (data.exists() ? data.child('completedCount').val() : 0) + 1) && newData.child('completedCount').val() <= newData.child('attemptCount').val()",
+          "userName": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 30" },
+          "exerciseTitle": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120" },
+          "attemptCount": { ".validate": "newData.isNumber()" },
+          "completedCount": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+          "lastScore": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100" },
+          "bestScore": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100" },
+          "lastAttemptAt": { ".validate": "newData.isNumber() && newData.val() <= now + 300000" },
+          "$other": { ".validate": false }
+        }
+      }
+    }
+  }
+}
