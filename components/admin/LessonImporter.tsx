@@ -190,8 +190,11 @@ export function LessonImporter() {
           <dl className="summary-grid">
             <div><dt>Mã bài</dt><dd>{lesson.id}</dd></div>
             <div><dt>Level</dt><dd>{lesson.level}</dd></div>
-            <div><dt>Số từ</dt><dd>{lesson.vocabulary?.length ?? 0}</dd></div>
-            <div><dt>Số câu</dt><dd>{lesson.questions.length}</dd></div>
+            <div><dt>Lý thuyết</dt><dd>{lesson.theory?.length ? `Có (${lesson.theory.length} phần)` : "Không"}</dd></div>
+            <div><dt>Ví dụ</dt><dd>{lesson.examples?.length ?? 0}</dd></div>
+            <div><dt>Luyện có hướng dẫn</dt><dd>{lesson.guidedPractice?.length ?? 0}</dd></div>
+            <div><dt>Từ vựng</dt><dd>{lesson.vocabulary?.length ?? 0}</dd></div>
+            <div><dt>Câu kiểm tra</dt><dd>{lesson.questions.length}</dd></div>
             <div><dt>Audio</dt><dd>{audioLabel(lesson)}</dd></div>
             <div><dt>Hiển thị</dt><dd>{lesson.published ? "Published" : "Ẩn"}</dd></div>
           </dl>

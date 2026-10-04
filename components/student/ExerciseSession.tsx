@@ -1,13 +1,23 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useSpeech } from "../../hooks/useSpeech";
-import { startAttempt, type AttemptHandle } from "../../lib/attempts";
-import type { Lesson } from "../../lib/lesson-schema";
+import { startAttempt, type AttemptHandle, type AttemptResult } from "../../lib/attempts";
+import {
+  getProgressSnapshot,
+  getServerProgressSnapshot,
+  hasStartedStudying,
+  isLessonStudied,
+  subscribeProgress,
+} from "../../lib/lesson-progress";
+import { hasLearningContent, type Lesson, type Question } from "../../lib/lesson-schema";
 import type { Activity } from "../../lib/presence-model";
 import { saveResult } from "../../lib/results";
+import { buildAnswerResults } from "../../lib/review";
 import { computeProgress, computeScore } from "../../lib/scoring";
+import { Link } from "../shared/Link";
 import { ExercisePlayer } from "./ExercisePlayer";
+import { LessonStepper } from "./LessonStepper";
 import { ResultScreen } from "./ResultScreen";
 
 type ExerciseSessionProps = {
@@ -16,36 +26,62 @@ type ExerciseSessionProps = {
   /** Reports what this tab is doing, for presence. */
   onActivity: (activity: Activity) => void;
   onExit: () => void;
-  /** Admin preview: nothing is recorded. */
+  /** Admin preview: nothing is recorded, no intro screen. */
   preview?: boolean;
 };
 
-type RunState = {
+type Run = {
+  /** 0 = intro screen (no attempt yet); each start/retry increments it. */
   run: number;
   index: number;
   answers: (string | null)[];
   finished: boolean;
 };
 
-const freshRun = (lesson: Lesson, run: number): RunState => ({
+/** "Ôn câu sai": a local, unscored run over a subset of questions. */
+type Review = {
+  questions: Question[];
+  index: number;
+  answers: (string | null)[];
+  finished: boolean;
+};
+
+const freshRun = (lesson: Lesson, run: number): Run => ({
   run,
   index: 0,
   answers: lesson.questions.map(() => null),
   finished: false,
 });
 
+const noopSubscribe = () => () => {};
+
+function attemptResult(lesson: Lesson, answers: (string | null)[]): AttemptResult {
+  const score = computeScore(lesson.questions, answers);
+  return {
+    correctAnswers: score.correct,
+    totalQuestions: score.total,
+    score: score.percent,
+    answerResults: buildAnswerResults(lesson.questions, answers),
+  };
+}
+
 /**
- * One exercise, possibly retried several times. Every run is a new attempt
- * (attempts/{uid}/{lessonId}/{attemptId}); leaving before the end — "Thoát
- * bài", the home link, another lesson, browser back — marks it abandoned.
- * Closing the browser leaves it in_progress (shown as stale to admins).
+ * The scored test ("Kiểm tra"). Every start or "Làm lại" is a new attempt
+ * (attempts/{uid}/{lessonId}/{attemptId}) that also stores per-question
+ * answerResults. Leaving before the end — "Thoát bài", the home link,
+ * another lesson, browser back — marks it abandoned; closing the browser
+ * leaves it in_progress (shown as stale to admins). Reviewing wrong answers
+ * afterwards is local and never creates an attempt.
  */
 export function ExerciseSession({ lesson, userName, onActivity, onExit, preview = false }: ExerciseSessionProps) {
-  const [state, setState] = useState<RunState>(() => freshRun(lesson, 1));
+  const [state, setState] = useState<Run>(() => freshRun(lesson, preview ? 1 : 0));
+  const [review, setReview] = useState<Review | null>(null);
   const [attemptInfo, setAttemptInfo] = useState<{ run: number; number: number; startedAt: number } | null>(null);
   const handleRef = useRef<AttemptHandle | null>(null);
   const stateRef = useRef(state);
   const speech = useSpeech(lesson.audio);
+  const progressMap = useSyncExternalStore(subscribeProgress, getProgressSnapshot, getServerProgressSnapshot);
+  const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
 
   const userNameRef = useRef(userName);
   const hasName = Boolean(userName);
@@ -58,14 +94,18 @@ export function ExerciseSession({ lesson, userName, onActivity, onExit, preview 
     userNameRef.current = userName;
   }, [userName]);
 
-  // Start one attempt per run. The 0 ms timer skips React StrictMode's
-  // throw-away mount so development does not create duplicate attempts.
+  // One attempt per run (run 0 is the intro screen). The 0 ms timer skips
+  // React StrictMode's throw-away mount so development does not create
+  // duplicate attempts.
   const { run } = state;
   useEffect(() => {
     const name = userNameRef.current;
-    if (preview || !name) return;
+    if (preview || !name || run === 0) return;
     let cancelled = false;
     let handle: AttemptHandle | null = null;
+    const abandon = (target: AttemptHandle) =>
+      target.abandon(attemptResult(lesson, stateRef.current.answers)).catch(() => undefined);
+
     const timer = setTimeout(() => {
       void startAttempt({
         exerciseId: lesson.id,
@@ -86,12 +126,6 @@ export function ExerciseSession({ lesson, userName, onActivity, onExit, preview 
         .catch((error: unknown) => console.warn("[attempt]", error));
     }, 0);
 
-    const abandon = (target: AttemptHandle) => {
-      const { answers } = stateRef.current;
-      const score = computeScore(lesson.questions, answers);
-      return target.abandon({ correctAnswers: score.correct, totalQuestions: score.total, score: score.percent }).catch(() => undefined);
-    };
-
     return () => {
       cancelled = true;
       clearTimeout(timer);
@@ -103,9 +137,10 @@ export function ExerciseSession({ lesson, userName, onActivity, onExit, preview 
   }, [run, lesson, preview, hasName]);
 
   const currentAttempt = attemptInfo?.run === run ? attemptInfo : null;
+  const testing = run > 0 && !state.finished && !review;
 
   const activity = useMemo<Activity>(() => {
-    if (preview || state.finished) return { state: "viewing" };
+    if (preview || !testing) return { state: "viewing" };
     const total = lesson.questions.length;
     const current = state.index + 1;
     return {
@@ -118,7 +153,7 @@ export function ExerciseSession({ lesson, userName, onActivity, onExit, preview 
       attemptNumber: currentAttempt?.number ?? 0,
       attemptStartedAt: currentAttempt?.startedAt ?? 0,
     };
-  }, [preview, state.finished, state.index, lesson, currentAttempt]);
+  }, [preview, testing, state.index, lesson, currentAttempt]);
 
   useEffect(() => {
     onActivity(activity);
@@ -135,30 +170,129 @@ export function ExerciseSession({ lesson, userName, onActivity, onExit, preview 
     });
   }, []);
 
+  const answerReview = useCallback((value: string) => {
+    setReview((r) => {
+      if (!r || r.finished || r.answers[r.index] !== null) return r;
+      const answers = [...r.answers];
+      answers[r.index] = value;
+      return { ...r, answers };
+    });
+  }, []);
+
   const next = () => {
     if (state.index + 1 < lesson.questions.length) {
       setState({ ...state, index: state.index + 1 });
       return;
     }
-    const score = computeScore(lesson.questions, state.answers);
     const finished = { ...state, finished: true };
     stateRef.current = finished;
     setState(finished);
     window.scrollTo({ top: 0 });
     if (preview) return;
-    saveResult(lesson.id, score);
-    void handleRef.current
-      ?.complete({ correctAnswers: score.correct, totalQuestions: score.total, score: score.percent })
+    saveResult(lesson.id, computeScore(lesson.questions, state.answers));
+    void handleRef.current?.complete(attemptResult(lesson, state.answers))
       .catch((error: unknown) => console.warn("[attempt]", error));
   };
 
+  const startReview = (questions: Question[]) => {
+    if (questions.length === 0) return;
+    setReview({ questions, index: 0, answers: questions.map(() => null), finished: false });
+    window.scrollTo({ top: 0 });
+  };
+
+  const retry = () => {
+    setReview(null);
+    setState(freshRun(lesson, run + 1));
+  };
+
+  const studied = isLessonStudied(lesson, progressMap[lesson.id]);
+  const exitLabel = preview ? "← Đóng xem thử" : "← Thoát bài";
+
+  // ---------- Intro: "Bắt đầu kiểm tra" ----------
+  if (run === 0) {
+    const needsStudy = hasLearningContent(lesson) && !studied && mounted;
+    return (
+      <section className="test-intro" aria-labelledby="intro-title">
+        <LessonStepper lesson={lesson} current="test" />
+        <h1 id="intro-title">Kiểm tra: {lesson.title}</h1>
+        <ul className="intro-facts">
+          <li>{lesson.questions.length} câu, đi từ dễ đến khó hơn.</li>
+          <li>Phần này <strong>tính điểm</strong> và không có gợi ý — hãy tự làm nhé.</li>
+          <li>Làm xong bạn sẽ xem lại từng câu sai và vì sao sai.</li>
+        </ul>
+        {needsStudy && (
+          <p className="panel-notice">
+            {hasStartedStudying(progressMap[lesson.id])
+              ? "Bạn chưa học hết bài này. Nên học xong phần quy tắc, ví dụ và luyện tập trước khi kiểm tra."
+              : "Bạn chưa học bài này. Nên xem quy tắc và ví dụ trước khi kiểm tra."}
+          </p>
+        )}
+        <div className="row-actions">
+          {needsStudy ? (
+            <>
+              <Link className="btn btn-primary" href={`/learn/${lesson.id}`}>Học bài trước</Link>
+              <button type="button" className="btn btn-ghost" onClick={retry}>Vẫn làm kiểm tra</button>
+            </>
+          ) : (
+            <>
+              <button type="button" className="btn btn-primary" onClick={retry}>Bắt đầu kiểm tra</button>
+              {hasLearningContent(lesson) && (
+                <Link className="btn btn-ghost" href={`/learn/${lesson.id}`}>Xem lại bài học</Link>
+              )}
+            </>
+          )}
+          <button type="button" className="btn btn-ghost" onClick={onExit}>Về trang chủ</button>
+        </div>
+      </section>
+    );
+  }
+
+  // ---------- Review of wrong answers (unscored) ----------
+  if (review) {
+    const reviewLesson = { ...lesson, questions: review.questions };
+    if (review.finished) {
+      return (
+        <ResultScreen
+          lesson={reviewLesson}
+          answers={review.answers}
+          mode="review"
+          attemptNumber={null}
+          onReview={startReview}
+          onRetry={retry}
+          onBackToResult={() => setReview(null)}
+          onHome={onExit}
+        />
+      );
+    }
+    return (
+      <>
+        <p className="panel-notice review-banner">Ôn câu sai — phần này không tính điểm.</p>
+        <ExercisePlayer
+          lesson={reviewLesson}
+          index={review.index}
+          answer={review.answers[review.index] ?? null}
+          onAnswer={answerReview}
+          onNext={() =>
+            setReview((r) => r && (r.index + 1 < r.questions.length ? { ...r, index: r.index + 1 } : { ...r, finished: true }))
+          }
+          onExit={() => setReview(null)}
+          exitLabel="← Về kết quả"
+          speech={speech}
+        />
+      </>
+    );
+  }
+
+  // ---------- Result ----------
   if (state.finished) {
     return (
       <ResultScreen
-        title={lesson.title}
-        score={computeScore(lesson.questions, state.answers)}
+        lesson={lesson}
+        answers={state.answers}
+        mode="test"
         attemptNumber={currentAttempt?.number ?? null}
-        onRetry={() => setState(freshRun(lesson, state.run + 1))}
+        onReview={startReview}
+        onRetry={retry}
         onHome={onExit}
         homeLabel={preview ? "Đóng xem thử" : "Về trang chủ"}
       />
@@ -173,7 +307,7 @@ export function ExerciseSession({ lesson, userName, onActivity, onExit, preview 
       onAnswer={answer}
       onNext={next}
       onExit={onExit}
-      exitLabel={preview ? "← Đóng xem thử" : "← Thoát bài"}
+      exitLabel={exitLabel}
       speech={speech}
     />
   );

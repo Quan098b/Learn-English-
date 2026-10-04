@@ -3,7 +3,7 @@
   "id": "pronouns-01",
   "order": 1,
   "title": "Đại từ nhân xưng",
-  "description": "Học và luyện các đại từ I, you, he, she, it, we, they.",
+  "description": "I, you, he, she, it, we, they là gì và dùng khi nào — học từ con số 0.",
   "level": "A1",
   "published": true,
   "audio": {
@@ -16,42 +16,63 @@
       "word": "I",
       "ipa": "/aɪ/",
       "meaning": "tôi",
+      "usage": "Người nói nói về chính mình.",
+      "example": "I am a student.",
+      "exampleMeaning": "Tôi là một học sinh.",
       "speak": "I"
     },
     {
       "word": "you",
       "ipa": "/juː/",
-      "meaning": "bạn",
+      "meaning": "bạn / các bạn",
+      "usage": "Nói với người đang nghe.",
+      "example": "You are my friend.",
+      "exampleMeaning": "Bạn là bạn của tôi.",
       "speak": "you"
     },
     {
       "word": "he",
       "ipa": "/hiː/",
-      "meaning": "anh ấy",
+      "meaning": "anh ấy / cậu ấy",
+      "usage": "Một người nam.",
+      "example": "He is my brother.",
+      "exampleMeaning": "Cậu ấy là anh trai tôi.",
       "speak": "he"
     },
     {
       "word": "she",
       "ipa": "/ʃiː/",
-      "meaning": "cô ấy",
+      "meaning": "cô ấy / chị ấy",
+      "usage": "Một người nữ.",
+      "example": "She is my friend.",
+      "exampleMeaning": "Cô ấy là bạn tôi.",
       "speak": "she"
     },
     {
       "word": "it",
       "ipa": "/ɪt/",
       "meaning": "nó",
+      "usage": "Một đồ vật, sự vật hoặc con vật.",
+      "example": "It is my cat.",
+      "exampleMeaning": "Nó là con mèo của tôi.",
       "speak": "it"
     },
     {
       "word": "we",
       "ipa": "/wiː/",
-      "meaning": "chúng tôi",
+      "meaning": "chúng tôi / chúng ta",
+      "usage": "Tôi + người khác.",
+      "example": "We are friends.",
+      "exampleMeaning": "Chúng tôi là bạn.",
       "speak": "we"
     },
     {
       "word": "they",
       "ipa": "/ðeɪ/",
-      "meaning": "họ",
+      "meaning": "họ / chúng nó",
+      "usage": "Nhiều người hoặc vật, không có tôi.",
+      "example": "They are students.",
+      "exampleMeaning": "Họ là học sinh.",
       "speak": "they"
     }
   ],
@@ -81,7 +102,23 @@
         }
       ],
       "correctAnswer": "A",
-      "explanation": "I = tôi"
+      "explanation": {
+        "summary": "I = tôi. Dùng cho: người nói nói về chính mình.",
+        "whyNot": [
+          {
+            "answer": "Bạn",
+            "reason": "\"Bạn\" là you."
+          },
+          {
+            "answer": "Cô ấy",
+            "reason": "\"Cô ấy\" là she."
+          },
+          {
+            "answer": "Chúng tôi",
+            "reason": "\"Chúng tôi\" là we — có người nói trong đó."
+          }
+        ]
+      }
     },
     {
       "id": "q2",
@@ -108,7 +145,23 @@
         }
       ],
       "correctAnswer": "B",
-      "explanation": "you = bạn"
+      "explanation": {
+        "summary": "you = bạn / các bạn. Dùng cho: nói với người đang nghe.",
+        "whyNot": [
+          {
+            "answer": "Anh ấy",
+            "reason": "\"Anh ấy\" là he."
+          },
+          {
+            "answer": "Nó",
+            "reason": "\"Nó\" là it."
+          },
+          {
+            "answer": "Họ",
+            "reason": "\"Họ\" là they — nhiều người, không có người nói."
+          }
+        ]
+      }
     },
     {
       "id": "q3",
@@ -135,7 +188,23 @@
         }
       ],
       "correctAnswer": "C",
-      "explanation": "he = anh ấy"
+      "explanation": {
+        "summary": "he = anh ấy / cậu ấy. Dùng cho: một người nam.",
+        "whyNot": [
+          {
+            "answer": "Cô ấy",
+            "reason": "\"Cô ấy\" là she."
+          },
+          {
+            "answer": "Chúng tôi",
+            "reason": "\"Chúng tôi\" là we — có người nói trong đó."
+          },
+          {
+            "answer": "Tôi",
+            "reason": "\"Tôi\" là I."
+          }
+        ]
+      }
     },
     {
       "id": "q4",
@@ -162,7 +231,23 @@
         }
       ],
       "correctAnswer": "D",
-      "explanation": "she = cô ấy"
+      "explanation": {
+        "summary": "she = cô ấy / chị ấy. Dùng cho: một người nữ.",
+        "whyNot": [
+          {
+            "answer": "Nó",
+            "reason": "\"Nó\" là it."
+          },
+          {
+            "answer": "Họ",
+            "reason": "\"Họ\" là they — nhiều người, không có người nói."
+          },
+          {
+            "answer": "Bạn",
+            "reason": "\"Bạn\" là you."
+          }
+        ]
+      }
     },
     {
       "id": "q5",
@@ -189,7 +274,23 @@
         }
       ],
       "correctAnswer": "A",
-      "explanation": "it = nó"
+      "explanation": {
+        "summary": "it = nó. Dùng cho: một đồ vật, sự vật hoặc con vật.",
+        "whyNot": [
+          {
+            "answer": "Chúng tôi",
+            "reason": "\"Chúng tôi\" là we — có người nói trong đó."
+          },
+          {
+            "answer": "Tôi",
+            "reason": "\"Tôi\" là I."
+          },
+          {
+            "answer": "Anh ấy",
+            "reason": "\"Anh ấy\" là he."
+          }
+        ]
+      }
     },
     {
       "id": "q6",
@@ -216,7 +317,23 @@
         }
       ],
       "correctAnswer": "B",
-      "explanation": "we = chúng tôi"
+      "explanation": {
+        "summary": "we = chúng tôi / chúng ta. Dùng cho: tôi + người khác.",
+        "whyNot": [
+          {
+            "answer": "Họ",
+            "reason": "\"Họ\" là they — nhiều người, không có người nói."
+          },
+          {
+            "answer": "Bạn",
+            "reason": "\"Bạn\" là you."
+          },
+          {
+            "answer": "Cô ấy",
+            "reason": "\"Cô ấy\" là she."
+          }
+        ]
+      }
     },
     {
       "id": "q7",
@@ -243,7 +360,23 @@
         }
       ],
       "correctAnswer": "C",
-      "explanation": "they = họ"
+      "explanation": {
+        "summary": "they = họ / chúng nó. Dùng cho: nhiều người hoặc vật, không có tôi.",
+        "whyNot": [
+          {
+            "answer": "Tôi",
+            "reason": "\"Tôi\" là I."
+          },
+          {
+            "answer": "Anh ấy",
+            "reason": "\"Anh ấy\" là he."
+          },
+          {
+            "answer": "Nó",
+            "reason": "\"Nó\" là it."
+          }
+        ]
+      }
     },
     {
       "id": "q8",
@@ -269,7 +402,23 @@
         }
       ],
       "correctAnswer": "B",
-      "explanation": "she = cô ấy"
+      "explanation": {
+        "summary": "she = cô ấy / chị ấy. Dùng cho: một người nữ.",
+        "whyNot": [
+          {
+            "answer": "it",
+            "reason": "it nghĩa là nó (con vật/đồ vật)."
+          },
+          {
+            "answer": "they",
+            "reason": "they nghĩa là họ (nhiều người, không có người nói)."
+          },
+          {
+            "answer": "you",
+            "reason": "you nghĩa là bạn."
+          }
+        ]
+      }
     },
     {
       "id": "q9",
@@ -295,7 +444,23 @@
         }
       ],
       "correctAnswer": "C",
-      "explanation": "we = chúng tôi"
+      "explanation": {
+        "summary": "we = chúng tôi / chúng ta. Dùng cho: tôi + người khác.",
+        "whyNot": [
+          {
+            "answer": "they",
+            "reason": "they nghĩa là họ (nhiều người, không có người nói)."
+          },
+          {
+            "answer": "you",
+            "reason": "you nghĩa là bạn."
+          },
+          {
+            "answer": "she",
+            "reason": "she nghĩa là cô ấy (một người nữ)."
+          }
+        ]
+      }
     },
     {
       "id": "q10",
@@ -321,7 +486,328 @@
         }
       ],
       "correctAnswer": "D",
-      "explanation": "they = họ"
+      "explanation": {
+        "summary": "they = họ / chúng nó. Dùng cho: nhiều người hoặc vật, không có tôi.",
+        "whyNot": [
+          {
+            "answer": "I",
+            "reason": "I nghĩa là tôi."
+          },
+          {
+            "answer": "he",
+            "reason": "he nghĩa là anh ấy (một người nam)."
+          },
+          {
+            "answer": "it",
+            "reason": "it nghĩa là nó (con vật/đồ vật)."
+          }
+        ]
+      }
+    }
+  ],
+  "goals": [
+    "Đại từ là gì",
+    "Nghĩa của I / You / He / She / It / We / They",
+    "Khi nào dùng He, khi nào dùng She hay It",
+    "Phân biệt We (có tôi) và They (không có tôi)"
+  ],
+  "theory": [
+    {
+      "id": "chu-ngu",
+      "title": "Chủ ngữ là gì?",
+      "body": [
+        "Chủ ngữ là người, con vật hoặc đồ vật mà câu đang nói đến.",
+        "Ví dụ: Lan is a student. (Lan là một học sinh.)",
+        "Câu này nói về Lan → \"Lan\" là chủ ngữ.",
+        "Trong tiếng Anh, chủ ngữ thường đứng ở đầu câu."
+      ],
+      "tip": "Tự hỏi: \"Câu này đang nói về ai / cái gì?\"\n→ Câu trả lời chính là chủ ngữ."
+    },
+    {
+      "id": "dai-tu",
+      "title": "Đại từ là gì?",
+      "body": [
+        "Đại từ là từ dùng thay cho tên người hoặc vật, để không phải nhắc lại tên nhiều lần.",
+        "Ví dụ: Lan is a girl. Lan is my friend. → nhắc \"Lan\" hai lần, nghe bị lặp.",
+        "Thay bằng đại từ: Lan is a girl. She is my friend.",
+        "\"She\" đứng thay cho \"Lan\" → She là một đại từ."
+      ]
+    },
+    {
+      "id": "bay-dai-tu",
+      "title": "7 đại từ: I, You, He, She, It, We, They",
+      "body": [
+        "Đây là 7 từ bạn sẽ dùng rất nhiều. Đọc từng thẻ và bấm 🔊 để nghe câu ví dụ."
+      ],
+      "items": [
+        {
+          "term": "I",
+          "meaning": "tôi",
+          "usage": "người nói nói về chính mình.",
+          "example": "I am a student.",
+          "exampleMeaning": "Tôi là một học sinh.",
+          "note": "I luôn viết hoa, kể cả khi đứng giữa câu."
+        },
+        {
+          "term": "You",
+          "meaning": "bạn / các bạn",
+          "usage": "nói với người đang nghe mình.",
+          "example": "You are my friend.",
+          "exampleMeaning": "Bạn là bạn của tôi."
+        },
+        {
+          "term": "He",
+          "meaning": "anh ấy / cậu ấy / ông ấy",
+          "usage": "nói về MỘT người nam.",
+          "example": "Tom is a boy. He is my friend.",
+          "exampleMeaning": "Tom là con trai. Cậu ấy là bạn tôi.",
+          "note": "Tom là một người nam → thay Tom bằng He."
+        },
+        {
+          "term": "She",
+          "meaning": "cô ấy / chị ấy / bà ấy",
+          "usage": "nói về MỘT người nữ.",
+          "example": "Lan is a girl. She is my friend.",
+          "exampleMeaning": "Lan là con gái. Cô ấy là bạn tôi.",
+          "note": "Lan → nữ → She."
+        },
+        {
+          "term": "It",
+          "meaning": "nó",
+          "usage": "nói về MỘT đồ vật, sự vật hoặc con vật.",
+          "example": "My cat is small. It is very cute.",
+          "exampleMeaning": "Con mèo của tôi nhỏ. Nó rất dễ thương.",
+          "note": "Thú cưng đã biết là đực hay cái thì người bản xứ đôi khi dùng he/she. Nhưng trong bài cơ bản, khi không nói giới tính, dùng It."
+        },
+        {
+          "term": "We",
+          "meaning": "chúng tôi / chúng ta",
+          "usage": "người nói + một hoặc nhiều người khác (có \"tôi\" trong đó).",
+          "example": "Nam and I are students. We are students.",
+          "exampleMeaning": "Nam và tôi là học sinh. Chúng tôi là học sinh."
+        },
+        {
+          "term": "They",
+          "meaning": "họ / chúng nó",
+          "usage": "từ HAI người hoặc vật trở lên, KHÔNG có người nói.",
+          "example": "Nam and Hoa are students. They are students.",
+          "exampleMeaning": "Nam và Hoa là học sinh. Họ là học sinh."
+        }
+      ]
+    },
+    {
+      "id": "chon-dai-tu",
+      "title": "Chọn đại từ nào?",
+      "body": [
+        "Nhìn người/vật đang được nói đến rồi dùng bảng này:"
+      ],
+      "table": {
+        "headers": [
+          "Đang nói về",
+          "Dùng"
+        ],
+        "rows": [
+          [
+            "chính mình (tôi)",
+            "I"
+          ],
+          [
+            "người đang nghe (bạn)",
+            "You"
+          ],
+          [
+            "một người nam",
+            "He"
+          ],
+          [
+            "một người nữ",
+            "She"
+          ],
+          [
+            "một con vật / đồ vật",
+            "It"
+          ],
+          [
+            "tôi + người khác",
+            "We"
+          ],
+          [
+            "nhiều người/vật, không có tôi",
+            "They"
+          ]
+        ]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "id": "e1",
+      "sentence": "I am Lan.",
+      "meaning": "Tôi là Lan.",
+      "steps": [
+        "Người nói nói về chính mình → I"
+      ]
+    },
+    {
+      "id": "e2",
+      "sentence": "You are my friend.",
+      "meaning": "Bạn là bạn của tôi.",
+      "steps": [
+        "Nói với người đang nghe → You"
+      ]
+    },
+    {
+      "id": "e3",
+      "context": "Tom is a boy.",
+      "sentence": "He is tall.",
+      "meaning": "Tom là con trai. Cậu ấy cao.",
+      "steps": [
+        "Tom → một người nam → He"
+      ]
+    },
+    {
+      "id": "e4",
+      "context": "Lan is a girl.",
+      "sentence": "She is kind.",
+      "meaning": "Lan là con gái. Cô ấy tốt bụng.",
+      "steps": [
+        "Lan → một người nữ → She"
+      ]
+    },
+    {
+      "id": "e5",
+      "context": "This is my bag.",
+      "sentence": "It is new.",
+      "meaning": "Đây là cặp của tôi. Nó mới.",
+      "steps": [
+        "my bag → một đồ vật → It"
+      ]
+    },
+    {
+      "id": "e6",
+      "context": "Nam and I are students.",
+      "sentence": "We are friends.",
+      "meaning": "Nam và tôi là học sinh. Chúng tôi là bạn.",
+      "steps": [
+        "Nam + tôi → có người nói → We"
+      ]
+    },
+    {
+      "id": "e7",
+      "context": "Nam and Hoa are students.",
+      "sentence": "They are friends.",
+      "meaning": "Nam và Hoa là học sinh. Họ là bạn.",
+      "steps": [
+        "Nam + Hoa → không có người nói → They"
+      ]
+    }
+  ],
+  "guidedPractice": [
+    {
+      "id": "g1",
+      "prompt": "Gõ từ tiếng Anh có nghĩa là \"cô ấy\".",
+      "display": "cô ấy = ___",
+      "correctAnswer": "she",
+      "hints": [
+        "\"Cô ấy\" nói về một người nữ.",
+        "Một người nữ → đại từ bắt đầu bằng chữ S.",
+        "Đáp án có 3 chữ cái: s _ _"
+      ],
+      "explanation": {
+        "summary": "cô ấy = she (một người nữ).",
+        "whyNot": [
+          {
+            "answer": "he",
+            "reason": "he là anh ấy — người nam."
+          }
+        ]
+      }
+    },
+    {
+      "id": "g2",
+      "prompt": "Gõ từ tiếng Anh có nghĩa là \"họ\".",
+      "display": "họ = ___",
+      "correctAnswer": "they",
+      "hints": [
+        "\"Họ\" là nhiều người.",
+        "Nhiều người, không có tôi.",
+        "Đáp án bắt đầu bằng th…"
+      ],
+      "explanation": {
+        "summary": "họ = they (nhiều người, không có người nói).",
+        "whyNot": [
+          {
+            "answer": "we",
+            "reason": "we là chúng tôi — có người nói trong đó."
+          }
+        ]
+      }
+    },
+    {
+      "id": "g3",
+      "prompt": "Gõ từ tiếng Anh có nghĩa là \"chúng tôi\".",
+      "display": "chúng tôi = ___",
+      "correctAnswer": "we",
+      "hints": [
+        "\"Chúng tôi\" có cả người nói.",
+        "Tôi + người khác.",
+        "Đáp án có 2 chữ cái: w _"
+      ],
+      "explanation": {
+        "summary": "chúng tôi = we (tôi + người khác).",
+        "whyNot": [
+          {
+            "answer": "they",
+            "reason": "they là họ — không có người nói."
+          }
+        ]
+      }
+    },
+    {
+      "id": "g4",
+      "display": "Tom is a boy. ___ is tall.",
+      "correctAnswer": "He",
+      "acceptedAnswers": [
+        "he"
+      ],
+      "hints": [
+        "Câu nói về Tom.",
+        "Tom là một người nam.",
+        "Một người nam → He."
+      ],
+      "explanation": {
+        "summary": "Tom → người nam → He.",
+        "whyNot": [
+          {
+            "answer": "She",
+            "reason": "She dùng cho người nữ."
+          }
+        ]
+      },
+      "speakSentence": "Tom is a boy. He is tall."
+    },
+    {
+      "id": "g5",
+      "display": "This is my bag. ___ is new.",
+      "correctAnswer": "It",
+      "acceptedAnswers": [
+        "it"
+      ],
+      "hints": [
+        "Câu nói về my bag (cái cặp của tôi).",
+        "Cái cặp là một đồ vật.",
+        "Một đồ vật → It."
+      ],
+      "explanation": {
+        "summary": "my bag → một đồ vật → It.",
+        "whyNot": [
+          {
+            "answer": "He",
+            "reason": "He dùng cho người nam, không dùng cho đồ vật."
+          }
+        ]
+      },
+      "speakSentence": "This is my bag. It is new."
     }
   ]
 }

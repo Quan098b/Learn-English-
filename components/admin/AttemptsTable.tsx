@@ -56,7 +56,7 @@ export function AttemptsTable({ rows, showUser = true, now }: { rows: Row[]; sho
               <td>{a.exerciseTitle}</td>
               <td>{a.attemptNumber || "–"}</td>
               <td>
-                {a.status === "completed" ? `${a.score}% (${a.correctAnswers}/${a.totalQuestions})` : a.status === "abandoned" ? `${a.correctAnswers}/${a.totalQuestions} đúng` : "–"}
+                {a.status === "completed" ? `${a.score}% · ${a.correctAnswers} đúng · ${a.totalQuestions - a.correctAnswers} sai` : a.status === "abandoned" ? `${a.correctAnswers}/${a.totalQuestions} đúng` : "–"}
               </td>
               <td><span className={`badge badge-${a.display}`}>{STATUS_LABELS[a.display]}</span></td>
               <td>{formatDateTime(a.startedAt)}</td>

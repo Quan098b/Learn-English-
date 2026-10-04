@@ -15,6 +15,7 @@ import type { Lesson } from "../../lib/lesson-schema";
 import { subscribePublishedLessons } from "../../lib/lessons";
 import type { ConnectionStatus } from "../../lib/presence";
 import type { Activity } from "../../lib/presence-model";
+import { getProgressSnapshot, getServerProgressSnapshot, subscribeProgress } from "../../lib/lesson-progress";
 import { getResultsSnapshot, getServerResultsSnapshot, subscribeResults } from "../../lib/results";
 import { navigate, type Route } from "../../lib/router";
 import { Link } from "../shared/Link";
@@ -58,6 +59,7 @@ function usePublishedLessons() {
 export function StudentApp({ route }: { route: StudentRoute }) {
   const identity = useSyncExternalStore(subscribeIdentity, getIdentitySnapshot, getServerIdentitySnapshot);
   const results = useSyncExternalStore(subscribeResults, getResultsSnapshot, getServerResultsSnapshot);
+  const progress = useSyncExternalStore(subscribeProgress, getProgressSnapshot, getServerProgressSnapshot);
   const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
   const [renaming, setRenaming] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -100,7 +102,7 @@ export function StudentApp({ route }: { route: StudentRoute }) {
             )}
             <ul className="lesson-grid">
               {lessons.map((item, index) => (
-                <LessonCard key={item.id} lesson={item} index={index} lastResult={results[item.id]} />
+                <LessonCard key={item.id} lesson={item} index={index} lastResult={results[item.id]} progress={progress[item.id]} />
               ))}
             </ul>
           </section>
@@ -118,7 +120,7 @@ export function StudentApp({ route }: { route: StudentRoute }) {
       </div>
     );
   } else if (route.name === "learn" && lesson) {
-    content = <LearnPage lesson={lesson} />;
+    content = <LearnPage key={lesson.id} lesson={lesson} />;
   } else if (route.name === "exercise" && lesson) {
     content = mounted ? (
       <ExerciseSession

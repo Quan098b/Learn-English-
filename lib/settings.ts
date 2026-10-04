@@ -1,15 +1,27 @@
 /** Learner preferences, stored per browser in localStorage. */
 
 export type Accent = "US" | "UK";
+/** Reading speed. "normal" uses the lesson rate (default 0.85). */
+export type Speed = "slow" | "normal" | "fast";
 
 export type LearnerSettings = {
   accent: Accent;
   /** Speak the word automatically when a new question appears. Default OFF. */
   autoPlay: boolean;
+  speed: Speed;
 };
 
 const KEY = "englishPractice.settings";
-export const DEFAULT_SETTINGS: LearnerSettings = { accent: "US", autoPlay: false };
+export const DEFAULT_SETTINGS: LearnerSettings = { accent: "US", autoPlay: false, speed: "normal" };
+
+export const SPEED_LABELS: Record<Speed, string> = { slow: "Chậm (0.7)", normal: "Bình thường (0.85)", fast: "Nhanh (1.0)" };
+
+/** Speech rate for the learner's speed; "normal" keeps the lesson's own rate. */
+export function speechRate(settings: LearnerSettings, lessonRate?: number): number {
+  if (settings.speed === "slow") return 0.7;
+  if (settings.speed === "fast") return 1;
+  return lessonRate ?? 0.85;
+}
 
 export const ACCENT_LANGUAGE: Record<Accent, string> = { US: "en-US", UK: "en-GB" };
 
@@ -20,6 +32,7 @@ export function parseSettings(raw: string | null): LearnerSettings {
     return {
       accent: data.accent === "UK" ? "UK" : "US",
       autoPlay: data.autoPlay === true,
+      speed: data.speed === "slow" || data.speed === "fast" ? data.speed : "normal",
     };
   } catch {
     return DEFAULT_SETTINGS;

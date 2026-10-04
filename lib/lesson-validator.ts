@@ -13,6 +13,13 @@ import {
   type QuestionOption,
   type VocabularyItem,
 } from "./lesson-schema.ts";
+import {
+  validateExamples,
+  validateExplanation,
+  validateGoals,
+  validateGuided,
+  validateTheory,
+} from "./lesson-content-validator.ts";
 
 export type ValidationIssue = {
   /** Where the problem is, e.g. "Câu 7 (q7) › correctAnswer" or "Dòng 12". */
@@ -29,13 +36,14 @@ type Obj = Record<string, unknown>;
 
 const TOP_LEVEL_KEYS = [
   "schemaVersion", "id", "order", "title", "description", "level",
-  "published", "audio", "vocabulary", "questions",
+  "published", "audio", "goals", "theory", "examples", "guidedPractice",
+  "vocabulary", "questions",
 ];
 const QUESTION_KEYS = [
   "id", "type", "prompt", "display", "speak", "speakSentence", "explanation",
   "options", "correctAnswer", "acceptedAnswers",
 ];
-const VOCAB_KEYS = ["word", "ipa", "meaning", "speak", "example"];
+const VOCAB_KEYS = ["word", "ipa", "meaning", "speak", "usage", "example", "exampleMeaning"];
 const AUDIO_KEYS = ["enabled", "mode", "language", "rate"];
 
 function isObj(value: unknown): value is Obj {
@@ -174,7 +182,7 @@ function validateQuestion(c: Collector, raw: unknown, index: number, ids: Set<st
   const display = text(c, raw, "display", where, { required: false, max: LIMITS.display });
   const speak = text(c, raw, "speak", where, { required: type === "listen_choose", max: LIMITS.speak });
   const speakSentence = text(c, raw, "speakSentence", where, { required: false, max: LIMITS.speakSentence });
-  const explanation = text(c, raw, "explanation", where, { required: false, max: LIMITS.explanation });
+  const explanation = validateExplanation(c, raw.explanation, where);
   if (type === "listen_choose" && raw.speak === undefined) {
     // Message already added by text(); make the fix explicit.
     c.errors[c.errors.length - 1].fix = `Câu "listen_choose" cần "speak": từ sẽ được đọc lên.`;
@@ -284,13 +292,17 @@ function validateVocabulary(c: Collector, raw: unknown): VocabularyItem[] | unde
     const ipa = text(c, item, "ipa", where, { required: false, max: LIMITS.ipa });
     const speak = text(c, item, "speak", where, { required: false, max: LIMITS.speak });
     const example = text(c, item, "example", where, { required: false, max: LIMITS.example });
+    const usage = text(c, item, "usage", where, { required: false, max: LIMITS.usage });
+    const exampleMeaning = text(c, item, "exampleMeaning", where, { required: false, max: LIMITS.example });
     if (word && meaning) {
       items.push({
         word,
         meaning,
         ...(ipa ? { ipa } : {}),
         ...(speak ? { speak } : {}),
+        ...(usage ? { usage } : {}),
         ...(example ? { example } : {}),
+        ...(exampleMeaning ? { exampleMeaning } : {}),
       });
     }
   });
@@ -378,6 +390,10 @@ export function validateLesson(raw: unknown): ValidationResult {
   }
 
   const audio = validateAudio(c, raw.audio);
+  const goals = validateGoals(c, raw.goals);
+  const theory = validateTheory(c, raw.theory);
+  const examples = validateExamples(c, raw.examples);
+  const guidedPractice = validateGuided(c, raw.guidedPractice);
   const vocabulary = validateVocabulary(c, raw.vocabulary);
 
   const questions: Question[] = [];
@@ -407,6 +423,10 @@ export function validateLesson(raw: unknown): ValidationResult {
     level: level as Lesson["level"],
     published: raw.published as boolean,
     ...(audio ? { audio } : {}),
+    ...(goals?.length ? { goals } : {}),
+    ...(theory?.length ? { theory } : {}),
+    ...(examples?.length ? { examples } : {}),
+    ...(guidedPractice?.length ? { guidedPractice } : {}),
     ...(vocabulary && vocabulary.length > 0 ? { vocabulary } : {}),
     questions,
   };

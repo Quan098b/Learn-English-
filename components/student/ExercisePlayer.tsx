@@ -4,14 +4,18 @@ import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import {
   correctAnswerLabel,
   isAnswerCorrect,
+  answerText,
   FILL_BLANK_INSTRUCTION,
+  fillBlankAnswer,
+  speakRevealsAnswer,
   questionOptions,
   type Lesson,
-  type Question,
 } from "../../lib/lesson-schema";
+import { completedSentence } from "../../lib/guided";
 import { computeProgress } from "../../lib/scoring";
 import { ProgressBar } from "../shared/ProgressBar";
 import { AnswerOption } from "./AnswerOption";
+import { ExplanationView } from "./ExplanationView";
 import { SpeechButton } from "./SpeechButton";
 
 export type Speech = {
@@ -32,14 +36,6 @@ type ExercisePlayerProps = {
   exitLabel?: string;
   speech: Speech;
 };
-
-/**
- * For these types hearing the word before answering would give the answer
- * away, so the 🔊 button only appears after answering.
- */
-function speakRevealsAnswer(question: Question): boolean {
-  return question.type === "meaning_to_word" || question.type === "ipa_to_word" || question.type === "fill_blank";
-}
 
 export function ExercisePlayer({
   lesson,
@@ -67,6 +63,8 @@ export function ExercisePlayer({
     ? question.display ?? (question.prompt.includes("___") ? question.prompt : null)
     : question.type === "listen_choose" ? null : question.display ?? null;
   const heading = isFill ? FILL_BLANK_INSTRUCTION : question.prompt;
+  const fullSentence =
+    answered && isFill && sentence?.includes("___") ? completedSentence(sentence, fillBlankAnswer(question)) : null;
 
   const nextRef = useRef<HTMLButtonElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -220,7 +218,10 @@ export function ExercisePlayer({
                   Đáp án đúng: <strong>{correctAnswerLabel(question)}</strong>
                 </p>
               )}
-              {question.explanation && <p className="feedback-explain">{question.explanation}</p>}
+              {fullSentence && <p className="complete-sentence" lang="en">{fullSentence}</p>}
+              <div className="feedback-explain">
+                <ExplanationView explanation={question.explanation} wrongAnswer={correct ? null : answerText(question, answer)} />
+              </div>
             </div>
           )}
         </div>

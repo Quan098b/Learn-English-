@@ -11,9 +11,122 @@
     "mode": "tts",
     "rate": 0.85
   },
+  "goals": [
+    "Điều 1 học viên sẽ biết sau bài",
+    "Điều 2 học viên sẽ biết sau bài"
+  ],
+  "theory": [
+    {
+      "id": "t1",
+      "title": "Tên quy tắc (vd: Chủ ngữ là gì?)",
+      "body": [
+        "Giải thích bằng tiếng Việt thật đơn giản.",
+        "Ví dụ: Lan is a student. → Lan là chủ ngữ."
+      ],
+      "items": [
+        {
+          "term": "they",
+          "meaning": "họ",
+          "usage": "nhiều người, không có tôi.",
+          "example": "They are friends.",
+          "exampleMeaning": "Họ là bạn bè."
+        }
+      ],
+      "table": {
+        "headers": [
+          "Chủ ngữ",
+          "Đi với"
+        ],
+        "rows": [
+          [
+            "I",
+            "am"
+          ],
+          [
+            "He / She / It",
+            "is"
+          ],
+          [
+            "You / We / They",
+            "are"
+          ]
+        ]
+      },
+      "tip": "Mẹo nhớ ngắn gọn.\nCó thể xuống dòng."
+    }
+  ],
+  "examples": [
+    {
+      "id": "e1",
+      "context": "Lan is a girl.",
+      "sentence": "She is my friend.",
+      "meaning": "Lan là con gái. Cô ấy là bạn tôi.",
+      "steps": [
+        "Lan → người nữ → She",
+        "She đi với is"
+      ],
+      "breakdown": [
+        {
+          "text": "She",
+          "meaning": "cô ấy",
+          "role": "chủ ngữ"
+        },
+        {
+          "text": "is",
+          "meaning": "là",
+          "role": "động từ to be"
+        },
+        {
+          "text": "my friend",
+          "meaning": "bạn của tôi"
+        }
+      ]
+    }
+  ],
+  "guidedPractice": [
+    {
+      "id": "g1",
+      "display": "Tom is a boy. ___ is tall.",
+      "correctAnswer": "He",
+      "acceptedAnswers": [
+        "he"
+      ],
+      "hints": [
+        "Câu nói về Tom.",
+        "Tom là một người nam.",
+        "Một người nam → He."
+      ],
+      "explanation": {
+        "summary": "Tom → người nam → He.",
+        "whyNot": [
+          {
+            "answer": "She",
+            "reason": "She dùng cho người nữ."
+          }
+        ]
+      },
+      "speakSentence": "Tom is a boy. He is tall."
+    }
+  ],
   "vocabulary": [
-    { "word": "they", "ipa": "/ðeɪ/", "meaning": "họ", "speak": "they" },
-    { "word": "she", "ipa": "/ʃiː/", "meaning": "cô ấy", "speak": "she" }
+    {
+      "word": "they",
+      "ipa": "/ðeɪ/",
+      "meaning": "họ",
+      "speak": "they",
+      "usage": "Nhiều người, không có tôi.",
+      "example": "They are students.",
+      "exampleMeaning": "Họ là học sinh."
+    },
+    {
+      "word": "she",
+      "ipa": "/ʃiː/",
+      "meaning": "cô ấy",
+      "speak": "she",
+      "usage": "Một người nữ.",
+      "example": "She is my friend.",
+      "exampleMeaning": "Cô ấy là bạn tôi."
+    }
   ],
   "questions": [
     {
@@ -23,10 +136,22 @@
       "display": "they",
       "speak": "they",
       "options": [
-        { "id": "A", "text": "tôi" },
-        { "id": "B", "text": "họ" },
-        { "id": "C", "text": "chúng tôi" },
-        { "id": "D", "text": "cô ấy" }
+        {
+          "id": "A",
+          "text": "tôi"
+        },
+        {
+          "id": "B",
+          "text": "họ"
+        },
+        {
+          "id": "C",
+          "text": "chúng tôi"
+        },
+        {
+          "id": "D",
+          "text": "cô ấy"
+        }
       ],
       "correctAnswer": "B",
       "explanation": "they = họ"
@@ -37,10 +162,22 @@
       "prompt": "Nghe và chọn từ đúng",
       "speak": "she",
       "options": [
-        { "id": "A", "text": "he" },
-        { "id": "B", "text": "she" },
-        { "id": "C", "text": "we" },
-        { "id": "D", "text": "they" }
+        {
+          "id": "A",
+          "text": "he"
+        },
+        {
+          "id": "B",
+          "text": "she"
+        },
+        {
+          "id": "C",
+          "text": "we"
+        },
+        {
+          "id": "D",
+          "text": "they"
+        }
       ],
       "correctAnswer": "B"
     },
@@ -51,8 +188,23 @@
       "display": "Lan is a girl. ___ is my friend.",
       "speakSentence": "Lan is a girl. She is my friend.",
       "correctAnswer": "She",
-      "acceptedAnswers": ["she"],
-      "explanation": "Lan là nữ nên dùng She."
+      "acceptedAnswers": [
+        "she"
+      ],
+      "explanation": {
+        "summary": "Lan là nữ nên dùng She.",
+        "steps": [
+          "Câu nói về Lan.",
+          "Lan là một người nữ → She.",
+          "She đi với is."
+        ],
+        "whyNot": [
+          {
+            "answer": "He",
+            "reason": "He dùng cho người nam."
+          }
+        ]
+      }
     }
   ]
 }

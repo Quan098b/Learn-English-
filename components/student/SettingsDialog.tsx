@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef } from "react";
 import { useSettings } from "../../hooks/useSpeech";
-import { ACCENT_LANGUAGE, updateSettings, type Accent } from "../../lib/settings";
+import { ACCENT_LANGUAGE, SPEED_LABELS, speechRate, updateSettings, type Accent, type Speed } from "../../lib/settings";
 import { isSpeechSupported, speakEnglish } from "../../lib/speech";
 
 export function SettingsDialog({ onClose }: { onClose: () => void }) {
@@ -44,6 +44,28 @@ export function SettingsDialog({ onClose }: { onClose: () => void }) {
               </label>
             ))}
           </div>
+        </fieldset>
+        <fieldset className="field">
+          <legend>Tốc độ đọc</legend>
+          <div className="segmented">
+            {(["slow", "normal", "fast"] as const).map((speed: Speed) => (
+              <label key={speed} className={settings.speed === speed ? "is-active" : ""}>
+                <input
+                  type="radio"
+                  name="speed"
+                  value={speed}
+                  checked={settings.speed === speed}
+                  onChange={() => {
+                    const next = { ...settings, speed };
+                    updateSettings({ speed });
+                    void speakEnglish("She is my friend.", { language: ACCENT_LANGUAGE[settings.accent], rate: speechRate(next) });
+                  }}
+                />
+                {SPEED_LABELS[speed]}
+              </label>
+            ))}
+          </div>
+          <p className="muted small">Mới học nên chọn Chậm.</p>
         </fieldset>
         <label className="switch">
           <input

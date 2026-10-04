@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "id": "fill-blank-01",
   "order": 4,
-  "title": "Điền từ",
-  "description": "Gõ từ còn thiếu để hoàn thành câu.",
+  "title": "Điền từ: Đại từ và am / is / are",
+  "description": "Học chủ ngữ, đại từ I/You/He/She/It/We/They và am/is/are từ con số 0, rồi tự điền từ.",
   "level": "A1",
   "published": true,
   "audio": {
@@ -11,161 +11,483 @@
     "mode": "tts",
     "rate": 0.85
   },
+  "goals": [
+    "Chủ ngữ là gì và cách tìm chủ ngữ trong câu",
+    "I / You / He / She / It / We / They dùng khi nào",
+    "I đi với am",
+    "He / She / It đi với is",
+    "You / We / They đi với are",
+    "Tự điền đúng từ vào câu cơ bản"
+  ],
+  "theory": [
+    {
+      "id": "chu-ngu",
+      "title": "Chủ ngữ là gì?",
+      "body": [
+        "Chủ ngữ là người, con vật hoặc đồ vật mà câu đang nói đến.",
+        "Ví dụ: Lan is a student. (Lan là một học sinh.)",
+        "Câu này nói về Lan → \"Lan\" là chủ ngữ.",
+        "Trong tiếng Anh, chủ ngữ thường đứng ở đầu câu."
+      ],
+      "tip": "Tự hỏi: \"Câu này đang nói về ai / cái gì?\"\n→ Câu trả lời chính là chủ ngữ."
+    },
+    {
+      "id": "dai-tu",
+      "title": "Đại từ là gì?",
+      "body": [
+        "Đại từ là từ dùng thay cho tên người hoặc vật, để không phải nhắc lại tên nhiều lần.",
+        "Ví dụ: Lan is a girl. Lan is my friend. → nhắc \"Lan\" hai lần, nghe bị lặp.",
+        "Thay bằng đại từ: Lan is a girl. She is my friend.",
+        "\"She\" đứng thay cho \"Lan\" → She là một đại từ."
+      ]
+    },
+    {
+      "id": "bay-dai-tu",
+      "title": "7 đại từ: I, You, He, She, It, We, They",
+      "body": [
+        "Đây là 7 từ bạn sẽ dùng rất nhiều. Đọc từng thẻ và bấm 🔊 để nghe câu ví dụ."
+      ],
+      "items": [
+        {
+          "term": "I",
+          "meaning": "tôi",
+          "usage": "người nói nói về chính mình.",
+          "example": "I am a student.",
+          "exampleMeaning": "Tôi là một học sinh.",
+          "note": "I luôn viết hoa, kể cả khi đứng giữa câu."
+        },
+        {
+          "term": "You",
+          "meaning": "bạn / các bạn",
+          "usage": "nói với người đang nghe mình.",
+          "example": "You are my friend.",
+          "exampleMeaning": "Bạn là bạn của tôi."
+        },
+        {
+          "term": "He",
+          "meaning": "anh ấy / cậu ấy / ông ấy",
+          "usage": "nói về MỘT người nam.",
+          "example": "Tom is a boy. He is my friend.",
+          "exampleMeaning": "Tom là con trai. Cậu ấy là bạn tôi.",
+          "note": "Tom là một người nam → thay Tom bằng He."
+        },
+        {
+          "term": "She",
+          "meaning": "cô ấy / chị ấy / bà ấy",
+          "usage": "nói về MỘT người nữ.",
+          "example": "Lan is a girl. She is my friend.",
+          "exampleMeaning": "Lan là con gái. Cô ấy là bạn tôi.",
+          "note": "Lan → nữ → She."
+        },
+        {
+          "term": "It",
+          "meaning": "nó",
+          "usage": "nói về MỘT đồ vật, sự vật hoặc con vật.",
+          "example": "My cat is small. It is very cute.",
+          "exampleMeaning": "Con mèo của tôi nhỏ. Nó rất dễ thương.",
+          "note": "Thú cưng đã biết là đực hay cái thì người bản xứ đôi khi dùng he/she. Nhưng trong bài cơ bản, khi không nói giới tính, dùng It."
+        },
+        {
+          "term": "We",
+          "meaning": "chúng tôi / chúng ta",
+          "usage": "người nói + một hoặc nhiều người khác (có \"tôi\" trong đó).",
+          "example": "Nam and I are students. We are students.",
+          "exampleMeaning": "Nam và tôi là học sinh. Chúng tôi là học sinh."
+        },
+        {
+          "term": "They",
+          "meaning": "họ / chúng nó",
+          "usage": "từ HAI người hoặc vật trở lên, KHÔNG có người nói.",
+          "example": "Nam and Hoa are students. They are students.",
+          "exampleMeaning": "Nam và Hoa là học sinh. Họ là học sinh."
+        }
+      ]
+    },
+    {
+      "id": "to-be",
+      "title": "am / is / are là gì?",
+      "body": [
+        "Động từ là từ chỉ hành động (ăn, chạy…) hoặc trạng thái (là, ở…).",
+        "am, is, are là ba dạng của cùng một động từ, gọi là \"to be\".",
+        "Trong câu đơn giản, có thể hiểu am / is / are là \"là\", \"thì\" hoặc \"ở\", tùy câu:",
+        "I am a student. = Tôi là một học sinh.",
+        "She is happy. = Cô ấy (thì) vui.",
+        "They are at school. = Họ ở trường.",
+        "Điều quan trọng nhất: dùng am, is hay are là do CHỦ NGỮ đứng ngay trước nó quyết định."
+      ]
+    },
+    {
+      "id": "bang-to-be",
+      "title": "Bảng: chủ ngữ + am / is / are",
+      "body": [
+        "Học thuộc bảng nhỏ này là làm được hầu hết các câu trong bài."
+      ],
+      "table": {
+        "headers": [
+          "Chủ ngữ",
+          "Đi với",
+          "Ví dụ"
+        ],
+        "rows": [
+          [
+            "I",
+            "am",
+            "I am a student."
+          ],
+          [
+            "He",
+            "is",
+            "He is my brother."
+          ],
+          [
+            "She",
+            "is",
+            "She is my friend."
+          ],
+          [
+            "It",
+            "is",
+            "It is cute."
+          ],
+          [
+            "You",
+            "are",
+            "You are my friend."
+          ],
+          [
+            "We",
+            "are",
+            "We are students."
+          ],
+          [
+            "They",
+            "are",
+            "They are friends."
+          ]
+        ]
+      },
+      "tip": "I → am\nHe / She / It → is\nYou / We / They → are"
+    },
+    {
+      "id": "cach-lam-bai",
+      "title": "Cách làm bài điền từ — 4 bước, không cần đoán",
+      "body": [
+        "Bước 1: Tìm người/vật đang được nói đến (thường nằm ở câu trước).",
+        "Bước 2: Đó là ai/cái gì? Một người nam, một người nữ, một con vật/đồ vật, hay nhiều người?",
+        "Bước 3: Chọn đại từ: nam → He, nữ → She, con vật/đồ vật → It, nhiều người → They, có \"tôi\" trong đó → We.",
+        "Bước 4: Nếu chỗ trống đứng ngay sau chủ ngữ, chọn am / is / are theo bảng.",
+        "Thử với: My cat is small. ___ is very cute.",
+        "My cat → một con vật → It → It đi với is → It is very cute. ✓"
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "id": "e1",
+      "context": "Lan is a girl.",
+      "sentence": "She is my friend.",
+      "meaning": "Lan là con gái. Cô ấy là bạn của tôi.",
+      "steps": [
+        "Lan → một người nữ → She",
+        "She đi với is → She is"
+      ]
+    },
+    {
+      "id": "e2",
+      "context": "Tom is a boy.",
+      "sentence": "He is my brother.",
+      "meaning": "Tom là con trai. Cậu ấy là anh trai tôi.",
+      "steps": [
+        "Tom → một người nam → He",
+        "He đi với is → He is"
+      ]
+    },
+    {
+      "id": "e3",
+      "context": "My cat is small.",
+      "sentence": "It is cute.",
+      "meaning": "Con mèo của tôi nhỏ. Nó dễ thương.",
+      "steps": [
+        "My cat (con mèo của tôi) → một con vật → It",
+        "It đi với is → It is"
+      ]
+    },
+    {
+      "id": "e4",
+      "context": "Nam and Hoa are students.",
+      "sentence": "They are friends.",
+      "meaning": "Nam và Hoa là học sinh. Họ là bạn bè.",
+      "steps": [
+        "Nam + Hoa → hai người, không có \"tôi\" → They",
+        "They đi với are → They are"
+      ]
+    },
+    {
+      "id": "e5",
+      "context": "Hoa and I are students.",
+      "sentence": "We are friends.",
+      "meaning": "Hoa và tôi là học sinh. Chúng tôi là bạn bè.",
+      "steps": [
+        "Hoa + I (tôi) → có người nói → We",
+        "We đi với are → We are"
+      ]
+    },
+    {
+      "id": "e6",
+      "sentence": "I am a student.",
+      "meaning": "Tôi là một học sinh.",
+      "steps": [
+        "I là chủ ngữ",
+        "I luôn đi với am"
+      ],
+      "breakdown": [
+        {
+          "text": "I",
+          "meaning": "tôi",
+          "role": "chủ ngữ"
+        },
+        {
+          "text": "am",
+          "meaning": "là",
+          "role": "động từ to be — dùng với I"
+        },
+        {
+          "text": "a student",
+          "meaning": "một học sinh / sinh viên"
+        }
+      ]
+    }
+  ],
+  "guidedPractice": [
+    {
+      "id": "g1",
+      "display": "Lan is a girl. ___ is my friend.",
+      "correctAnswer": "She",
+      "acceptedAnswers": [
+        "she"
+      ],
+      "hints": [
+        "Câu đang nói về Lan.",
+        "Lan là một người nữ.",
+        "Một người nữ → dùng She. She đi với is."
+      ],
+      "explanation": {
+        "summary": "Lan → người nữ → She. She đi với is: She is my friend.",
+        "whyNot": [
+          {
+            "answer": "He",
+            "reason": "He dùng cho người nam. Lan là con gái nên không dùng He."
+          },
+          {
+            "answer": "It",
+            "reason": "It dùng cho con vật hoặc đồ vật, không dùng cho người như Lan."
+          },
+          {
+            "answer": "They",
+            "reason": "They dùng cho nhiều người. Lan chỉ là một người — và They phải đi với are."
+          }
+        ]
+      },
+      "speakSentence": "Lan is a girl. She is my friend."
+    },
+    {
+      "id": "g2",
+      "display": "Tom is a boy. ___ is tall.",
+      "correctAnswer": "He",
+      "acceptedAnswers": [
+        "he"
+      ],
+      "hints": [
+        "Câu đang nói về Tom.",
+        "Tom là một người nam (a boy = một cậu bé).",
+        "Một người nam → He."
+      ],
+      "explanation": {
+        "summary": "Tom → người nam → He. He đi với is: He is tall.",
+        "whyNot": [
+          {
+            "answer": "She",
+            "reason": "She dùng cho người nữ. Tom là con trai."
+          },
+          {
+            "answer": "It",
+            "reason": "It dùng cho con vật/đồ vật, không dùng cho Tom."
+          }
+        ]
+      },
+      "speakSentence": "Tom is a boy. He is tall."
+    },
+    {
+      "id": "g3",
+      "display": "My dog is big. ___ is friendly.",
+      "correctAnswer": "It",
+      "acceptedAnswers": [
+        "it"
+      ],
+      "hints": [
+        "Câu đang nói về My dog (con chó của tôi).",
+        "Con chó là một con vật.",
+        "Một con vật → It."
+      ],
+      "explanation": {
+        "summary": "My dog → một con vật → It. It đi với is: It is friendly.",
+        "whyNot": [
+          {
+            "answer": "He",
+            "reason": "He dùng cho người nam. Bài không nói con chó đực hay cái, nên dùng It."
+          },
+          {
+            "answer": "We",
+            "reason": "We nghĩa là chúng tôi (có người nói). Con chó không phải \"chúng tôi\" — và We đi với are."
+          }
+        ]
+      },
+      "speakSentence": "My dog is big. It is friendly."
+    },
+    {
+      "id": "g4",
+      "display": "I ___ a student.",
+      "correctAnswer": "am",
+      "hints": [
+        "Lần này chỗ trống là am / is / are.",
+        "Chủ ngữ là I.",
+        "Nhìn bảng: I đi với am."
+      ],
+      "explanation": {
+        "summary": "I luôn đi với am: I am a student.",
+        "whyNot": [
+          {
+            "answer": "is",
+            "reason": "is đi với He / She / It, không đi với I."
+          },
+          {
+            "answer": "are",
+            "reason": "are đi với You / We / They, không đi với I."
+          }
+        ]
+      },
+      "speakSentence": "I am a student."
+    },
+    {
+      "id": "g5",
+      "display": "Nam and Hoa ___ my friends.",
+      "correctAnswer": "are",
+      "hints": [
+        "Chủ ngữ là Nam and Hoa.",
+        "Nam + Hoa là hai người → giống They.",
+        "They đi với are."
+      ],
+      "explanation": {
+        "summary": "Nam and Hoa (hai người) → giống They → are: Nam and Hoa are my friends.",
+        "whyNot": [
+          {
+            "answer": "is",
+            "reason": "is chỉ dùng cho MỘT người/vật (He / She / It). Nam and Hoa là hai người."
+          },
+          {
+            "answer": "am",
+            "reason": "am chỉ đi với I."
+          }
+        ]
+      },
+      "speakSentence": "Nam and Hoa are my friends."
+    }
+  ],
   "vocabulary": [
     {
       "word": "I",
       "ipa": "/aɪ/",
       "meaning": "tôi",
+      "usage": "Người nói nói về chính mình.",
+      "example": "I am a student.",
+      "exampleMeaning": "Tôi là một học sinh.",
       "speak": "I"
     },
     {
       "word": "you",
       "ipa": "/juː/",
-      "meaning": "bạn",
+      "meaning": "bạn / các bạn",
+      "usage": "Nói với người đang nghe.",
+      "example": "You are my friend.",
+      "exampleMeaning": "Bạn là bạn của tôi.",
       "speak": "you"
     },
     {
       "word": "he",
       "ipa": "/hiː/",
-      "meaning": "anh ấy",
+      "meaning": "anh ấy / cậu ấy",
+      "usage": "Một người nam.",
+      "example": "He is my brother.",
+      "exampleMeaning": "Cậu ấy là anh trai tôi.",
       "speak": "he"
     },
     {
       "word": "she",
       "ipa": "/ʃiː/",
-      "meaning": "cô ấy",
+      "meaning": "cô ấy / chị ấy",
+      "usage": "Một người nữ.",
+      "example": "She is my friend.",
+      "exampleMeaning": "Cô ấy là bạn tôi.",
       "speak": "she"
     },
     {
       "word": "it",
       "ipa": "/ɪt/",
       "meaning": "nó",
+      "usage": "Một đồ vật, sự vật hoặc con vật.",
+      "example": "It is my cat.",
+      "exampleMeaning": "Nó là con mèo của tôi.",
       "speak": "it"
     },
     {
       "word": "we",
       "ipa": "/wiː/",
-      "meaning": "chúng tôi",
+      "meaning": "chúng tôi / chúng ta",
+      "usage": "Tôi + người khác.",
+      "example": "We are friends.",
+      "exampleMeaning": "Chúng tôi là bạn.",
       "speak": "we"
     },
     {
       "word": "they",
       "ipa": "/ðeɪ/",
-      "meaning": "họ",
+      "meaning": "họ / chúng nó",
+      "usage": "Nhiều người hoặc vật, không có tôi.",
+      "example": "They are students.",
+      "exampleMeaning": "Họ là học sinh.",
       "speak": "they"
     },
     {
-      "word": "this",
-      "ipa": "/ðɪs/",
-      "meaning": "cái này",
-      "speak": "this"
+      "word": "am",
+      "ipa": "/æm/",
+      "meaning": "là / thì / ở",
+      "usage": "Chỉ đi với I.",
+      "example": "I am happy.",
+      "exampleMeaning": "Tôi vui.",
+      "speak": "am"
     },
     {
-      "word": "that",
-      "ipa": "/ðæt/",
-      "meaning": "cái kia",
-      "speak": "that"
+      "word": "is",
+      "ipa": "/ɪz/",
+      "meaning": "là / thì / ở",
+      "usage": "Đi với He / She / It (một người hoặc vật).",
+      "example": "She is my friend.",
+      "exampleMeaning": "Cô ấy là bạn tôi.",
+      "speak": "is"
     },
     {
-      "word": "here",
-      "ipa": "/hɪə(r)/",
-      "meaning": "ở đây",
-      "speak": "here"
-    },
-    {
-      "word": "there",
-      "ipa": "/ðeə(r)/",
-      "meaning": "ở đó",
-      "speak": "there"
-    },
-    {
-      "word": "yes",
-      "ipa": "/jes/",
-      "meaning": "có, vâng",
-      "speak": "yes"
-    },
-    {
-      "word": "no",
-      "ipa": "/nəʊ/",
-      "meaning": "không",
-      "speak": "no"
-    },
-    {
-      "word": "please",
-      "ipa": "/pliːz/",
-      "meaning": "làm ơn",
-      "speak": "please"
-    },
-    {
-      "word": "thanks",
-      "ipa": "/θæŋks/",
-      "meaning": "cảm ơn",
-      "speak": "thanks"
+      "word": "are",
+      "ipa": "/ɑː(r)/",
+      "meaning": "là / thì / ở",
+      "usage": "Đi với You / We / They.",
+      "example": "We are students.",
+      "exampleMeaning": "Chúng tôi là học sinh.",
+      "speak": "are"
     }
   ],
   "questions": [
     {
       "id": "q1",
-      "type": "fill_blank",
-      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
-      "display": "Lan is a girl. ___ is my friend.",
-      "speakSentence": "Lan is a girl. She is my friend.",
-      "correctAnswer": "She",
-      "acceptedAnswers": [
-        "she"
-      ],
-      "explanation": "Lan là con gái nên dùng She."
-    },
-    {
-      "id": "q2",
-      "type": "fill_blank",
-      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
-      "display": "Tom is a boy. ___ is my brother.",
-      "speakSentence": "Tom is a boy. He is my brother.",
-      "correctAnswer": "He",
-      "acceptedAnswers": [
-        "he"
-      ],
-      "explanation": "Tom là con trai nên dùng He."
-    },
-    {
-      "id": "q3",
-      "type": "fill_blank",
-      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
-      "display": "My cat is small. ___ is very cute.",
-      "speakSentence": "My cat is small. It is very cute.",
-      "correctAnswer": "It",
-      "acceptedAnswers": [
-        "it"
-      ],
-      "explanation": "Con mèo là con vật nên dùng It."
-    },
-    {
-      "id": "q4",
-      "type": "fill_blank",
-      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
-      "display": "Nam and Hoa are students. ___ are in class 6A.",
-      "speakSentence": "Nam and Hoa are students. They are in class 6A.",
-      "correctAnswer": "They",
-      "acceptedAnswers": [
-        "they"
-      ],
-      "explanation": "Nam và Hoa là hai người (không có mình) nên dùng They."
-    },
-    {
-      "id": "q5",
-      "type": "fill_blank",
-      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
-      "display": "My friends and I like English. ___ study together.",
-      "speakSentence": "My friends and I like English. We study together.",
-      "correctAnswer": "We",
-      "acceptedAnswers": [
-        "we"
-      ],
-      "explanation": "\"My friends and I\" gồm cả mình nên dùng We."
-    },
-    {
-      "id": "q6",
       "type": "fill_blank",
       "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "___ am a student.",
@@ -174,49 +496,315 @@
       "acceptedAnswers": [
         "i"
       ],
-      "explanation": "Đi với \"am\" là I."
+      "explanation": {
+        "summary": "Sau chỗ trống là am. Chỉ có I đi với am → I am a student.",
+        "steps": [
+          "Nhìn từ ngay sau chỗ trống: am.",
+          "am chỉ đi với I.",
+          "→ I am a student."
+        ],
+        "whyNot": [
+          {
+            "answer": "You",
+            "reason": "You đi với are (You are), không đi với am."
+          },
+          {
+            "answer": "He",
+            "reason": "He đi với is (He is), không đi với am."
+          },
+          {
+            "answer": "She",
+            "reason": "She đi với is (She is), không đi với am."
+          },
+          {
+            "answer": "We",
+            "reason": "We đi với are (We are), không đi với am."
+          },
+          {
+            "answer": "They",
+            "reason": "They đi với are (They are), không đi với am."
+          }
+        ]
+      }
+    },
+    {
+      "id": "q2",
+      "type": "fill_blank",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
+      "display": "Lan is a girl. ___ is my friend.",
+      "speakSentence": "Lan is a girl. She is my friend.",
+      "correctAnswer": "She",
+      "acceptedAnswers": [
+        "she"
+      ],
+      "explanation": {
+        "summary": "Lan là một người nữ → She. She đi với is.",
+        "steps": [
+          "Câu nói về Lan.",
+          "Lan là con gái → một người nữ.",
+          "Một người nữ → She.",
+          "She is my friend. ✓"
+        ],
+        "whyNot": [
+          {
+            "answer": "He",
+            "reason": "He dùng cho người nam. Lan là con gái."
+          },
+          {
+            "answer": "It",
+            "reason": "It dùng cho con vật/đồ vật, không dùng cho người."
+          },
+          {
+            "answer": "They",
+            "reason": "They dùng cho nhiều người và đi với are. Lan chỉ là một người."
+          },
+          {
+            "answer": "I",
+            "reason": "I là \"tôi\" và đi với am. Câu đang nói về Lan."
+          }
+        ]
+      }
+    },
+    {
+      "id": "q3",
+      "type": "fill_blank",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
+      "display": "Tom is a boy. ___ is my brother.",
+      "speakSentence": "Tom is a boy. He is my brother.",
+      "correctAnswer": "He",
+      "acceptedAnswers": [
+        "he"
+      ],
+      "explanation": {
+        "summary": "Tom là một người nam → He. He đi với is.",
+        "steps": [
+          "Câu nói về Tom.",
+          "Tom là con trai → một người nam.",
+          "Một người nam → He.",
+          "He is my brother. ✓"
+        ],
+        "whyNot": [
+          {
+            "answer": "She",
+            "reason": "She dùng cho người nữ. Tom là con trai."
+          },
+          {
+            "answer": "It",
+            "reason": "It dùng cho con vật/đồ vật, không dùng cho người."
+          },
+          {
+            "answer": "They",
+            "reason": "They dùng cho nhiều người và đi với are. Tom chỉ là một người."
+          }
+        ]
+      }
+    },
+    {
+      "id": "q4",
+      "type": "fill_blank",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
+      "display": "My cat is small. ___ is very cute.",
+      "speakSentence": "My cat is small. It is very cute.",
+      "correctAnswer": "It",
+      "acceptedAnswers": [
+        "it"
+      ],
+      "explanation": {
+        "summary": "My cat là một con vật số ít → It. It đi với is.",
+        "steps": [
+          "Tìm thứ đang được nói đến: My cat.",
+          "My cat là một con vật (chỉ một con).",
+          "Một con vật → It.",
+          "It đi với is → It is very cute."
+        ],
+        "whyNot": [
+          {
+            "answer": "We",
+            "reason": "We nghĩa là chúng tôi/chúng ta — người nói + người khác (ví dụ: My friends and I → We). My cat chỉ là một con vật nên không dùng We. Ngoài ra We đi với are (We are ✓, We is ✗)."
+          },
+          {
+            "answer": "He",
+            "reason": "He dùng cho người nam. Bài không nói con mèo đực hay cái, nên dùng It."
+          },
+          {
+            "answer": "She",
+            "reason": "She dùng cho người nữ. Bài không nói con mèo đực hay cái, nên dùng It."
+          },
+          {
+            "answer": "They",
+            "reason": "They dùng cho nhiều người/vật và đi với are. Ở đây chỉ có một con mèo."
+          }
+        ]
+      }
+    },
+    {
+      "id": "q5",
+      "type": "fill_blank",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
+      "display": "I ___ a student.",
+      "speakSentence": "I am a student.",
+      "correctAnswer": "am",
+      "explanation": {
+        "summary": "Chủ ngữ là I → am.",
+        "steps": [
+          "Chủ ngữ: I.",
+          "I luôn đi với am.",
+          "→ I am a student."
+        ],
+        "whyNot": [
+          {
+            "answer": "is",
+            "reason": "is đi với He / She / It, không đi với I."
+          },
+          {
+            "answer": "are",
+            "reason": "are đi với You / We / They, không đi với I."
+          }
+        ]
+      }
+    },
+    {
+      "id": "q6",
+      "type": "fill_blank",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
+      "display": "She ___ my friend.",
+      "speakSentence": "She is my friend.",
+      "correctAnswer": "is",
+      "explanation": {
+        "summary": "Chủ ngữ là She → is.",
+        "steps": [
+          "Chủ ngữ: She (một người nữ).",
+          "He / She / It đi với is.",
+          "→ She is my friend."
+        ],
+        "whyNot": [
+          {
+            "answer": "am",
+            "reason": "am chỉ đi với I."
+          },
+          {
+            "answer": "are",
+            "reason": "are đi với You / We / They. She chỉ là một người."
+          }
+        ]
+      }
     },
     {
       "id": "q7",
       "type": "fill_blank",
       "prompt": "Nhập từ còn thiếu vào chỗ trống.",
-      "display": "\"Are you OK?\" — \"___, I am fine.\"",
-      "speakSentence": "Are you OK?\" — \"Yes, I am fine.",
-      "correctAnswer": "Yes",
+      "display": "Nam and Hoa are students. ___ are in class 6A.",
+      "speakSentence": "Nam and Hoa are students. They are in class 6A.",
+      "correctAnswer": "They",
       "acceptedAnswers": [
-        "yes"
+        "they"
       ],
-      "explanation": "Câu trả lời đồng ý: Yes."
+      "explanation": {
+        "summary": "Nam và Hoa là hai người, không có \"tôi\" → They (They are).",
+        "steps": [
+          "Câu nói về Nam and Hoa.",
+          "Đó là hai người, và không có người nói.",
+          "Nhiều người, không có tôi → They.",
+          "They đi với are → They are in class 6A."
+        ],
+        "whyNot": [
+          {
+            "answer": "We",
+            "reason": "We phải có người nói (\"tôi\") trong đó. Câu chỉ nói về Nam và Hoa."
+          },
+          {
+            "answer": "He",
+            "reason": "He chỉ cho một người nam và đi với is. Ở đây có hai người."
+          },
+          {
+            "answer": "She",
+            "reason": "She chỉ cho một người nữ và đi với is. Ở đây có hai người."
+          }
+        ]
+      }
     },
     {
       "id": "q8",
       "type": "fill_blank",
       "prompt": "Nhập từ còn thiếu vào chỗ trống.",
-      "display": "Look at ___ book in my hand.",
-      "speakSentence": "Look at this book in my hand.",
-      "correctAnswer": "this",
-      "explanation": "Quyển sách ở trong tay mình (gần) nên dùng this."
+      "display": "My friends and I like English. ___ study together.",
+      "speakSentence": "My friends and I like English. We study together.",
+      "correctAnswer": "We",
+      "acceptedAnswers": [
+        "we"
+      ],
+      "explanation": {
+        "summary": "\"My friends and I\" có cả tôi → We.",
+        "steps": [
+          "Câu nói về My friends and I (các bạn tôi và tôi).",
+          "Trong nhóm này có \"I\" (tôi).",
+          "Tôi + người khác → We.",
+          "→ We study together."
+        ],
+        "whyNot": [
+          {
+            "answer": "They",
+            "reason": "They không có người nói. \"My friends and I\" có \"I\" (tôi) nên phải dùng We."
+          },
+          {
+            "answer": "I",
+            "reason": "I chỉ là một mình tôi. Ở đây là tôi cùng các bạn."
+          }
+        ]
+      }
     },
     {
       "id": "q9",
       "type": "fill_blank",
       "prompt": "Nhập từ còn thiếu vào chỗ trống.",
-      "display": "Can you help me, ___?",
-      "speakSentence": "Can you help me, please?",
-      "correctAnswer": "please",
-      "explanation": "Nhờ ai giúp lịch sự thì thêm please."
+      "display": "They ___ my classmates.",
+      "speakSentence": "They are my classmates.",
+      "correctAnswer": "are",
+      "explanation": {
+        "summary": "Chủ ngữ là They → are.",
+        "steps": [
+          "Chủ ngữ: They.",
+          "You / We / They đi với are.",
+          "→ They are my classmates."
+        ],
+        "whyNot": [
+          {
+            "answer": "is",
+            "reason": "is chỉ dùng cho một người/vật (He / She / It). They là nhiều người."
+          },
+          {
+            "answer": "am",
+            "reason": "am chỉ đi với I."
+          }
+        ]
+      }
     },
     {
       "id": "q10",
       "type": "fill_blank",
       "prompt": "Nhập từ còn thiếu vào chỗ trống.",
-      "display": "___ a lot for your help!",
-      "speakSentence": "Thanks a lot for your help!",
-      "correctAnswer": "Thanks",
-      "acceptedAnswers": [
-        "thanks"
-      ],
-      "explanation": "Cảm ơn: Thanks."
+      "display": "Hoa and I ___ happy.",
+      "speakSentence": "Hoa and I are happy.",
+      "correctAnswer": "are",
+      "explanation": {
+        "summary": "Hoa and I = Hoa + tôi → giống We → are.",
+        "steps": [
+          "Chủ ngữ: Hoa and I.",
+          "Hoa + I (tôi) → có người nói → giống We.",
+          "We đi với are.",
+          "→ Hoa and I are happy."
+        ],
+        "whyNot": [
+          {
+            "answer": "am",
+            "reason": "am chỉ đi với MỘT MÌNH I. Ở đây là Hoa and I (hai người) → are."
+          },
+          {
+            "answer": "is",
+            "reason": "is dùng cho một người/vật. Hoa and I là hai người."
+          }
+        ]
+      }
     }
   ]
 }

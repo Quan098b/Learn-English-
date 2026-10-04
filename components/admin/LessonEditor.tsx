@@ -22,6 +22,91 @@ import { IssueList } from "./IssueList";
 
 const LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 
+type Tab = "info" | "theory" | "examples" | "guided" | "vocabulary" | "questions" | "json";
+
+const TABS: { id: Tab; label: string; count?: (l: Lesson) => number }[] = [
+  { id: "info", label: "Thông tin" },
+  { id: "theory", label: "Lý thuyết", count: (l) => (l.goals?.length ? 1 : 0) + (l.theory?.length ?? 0) },
+  { id: "examples", label: "Ví dụ", count: (l) => l.examples?.length ?? 0 },
+  { id: "guided", label: "Luyện tập", count: (l) => l.guidedPractice?.length ?? 0 },
+  { id: "vocabulary", label: "Từ vựng", count: (l) => l.vocabulary?.length ?? 0 },
+  { id: "questions", label: "Câu hỏi", count: (l) => l.questions.length },
+  { id: "json", label: "JSON" },
+];
+
+type ContentPart = "theory" | "examples" | "guided";
+
+const PART_INFO: Record<ContentPart, { keys: (keyof Lesson)[]; title: string; help: string }> = {
+  theory: {
+    keys: ["goals", "theory"],
+    title: "Lý thuyết",
+    help: 'Object có "goals" (danh sách “Bạn sẽ học gì”) và "theory" (các phần: id, title, body[], items[], table, tip). Xem docs/LESSON_FORMAT.md.',
+  },
+  examples: {
+    keys: ["examples"],
+    title: "Ví dụ",
+    help: 'Object có "examples": [{ id, context?, sentence, meaning?, steps[]?, breakdown[]? }].',
+  },
+  guided: {
+    keys: ["guidedPractice"],
+    title: "Luyện có hướng dẫn",
+    help: 'Object có "guidedPractice": [{ id, display (có ___), correctAnswer, acceptedAnswers?, hints[], explanation? }].',
+  },
+};
+
+/** Edits one learning-content part as JSON; changes are validated with the whole lesson. */
+function ContentJsonEditor({ part, draft, onApply }: { part: ContentPart; draft: Lesson; onApply: (lesson: Lesson) => void }) {
+  const info = PART_INFO[part];
+  const initialText = JSON.stringify(Object.fromEntries(info.keys.map((k) => [k, draft[k] ?? []])), null, 2);
+  const [text, setText] = useState(initialText);
+  const [issues, setIssues] = useState<ValidationIssue[]>([]);
+  const [applied, setApplied] = useState("");
+  const textId = useId();
+
+  const apply = () => {
+    setApplied("");
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(text);
+    } catch (error) {
+      setIssues([{ where: info.title, message: `JSON không hợp lệ: ${error instanceof Error ? error.message : String(error)}`, fix: "Kiểm tra dấu phẩy, ngoặc kép, ngoặc { } [ ]." }]);
+      return;
+    }
+    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+      setIssues([{ where: info.title, message: "Phải là một object { ... }.", fix: info.help }]);
+      return;
+    }
+    const patch: Record<string, unknown> = {};
+    for (const key of info.keys) {
+      const value = (parsed as Record<string, unknown>)[key];
+      patch[key] = Array.isArray(value) && value.length === 0 ? undefined : value;
+    }
+    const result = validateLesson({ ...draft, ...patch });
+    if (!result.ok) {
+      setIssues(result.errors);
+      return;
+    }
+    setIssues([]);
+    onApply(result.lesson);
+    setApplied("Đã áp dụng. Nhớ bấm “Lưu bài”.");
+  };
+
+  return (
+    <section className="panel" aria-labelledby={`${textId}-title`}>
+      <h2 id={`${textId}-title`} className="panel-title">{info.title}</h2>
+      <p className="muted small">{info.help}</p>
+      <IssueList title="❌ Chưa áp dụng được" issues={issues} />
+      <label htmlFor={textId} className="sr-only">{info.title} (JSON)</label>
+      <textarea id={textId} className="code-input" rows={22} value={text} onChange={(e) => setText(e.target.value)} spellCheck={false} />
+      <div className="row-actions">
+        <button type="button" className="btn btn-primary" onClick={apply}>Áp dụng</button>
+        <button type="button" className="btn btn-ghost" onClick={() => setText(initialText)}>Hoàn tác</button>
+        {applied && <span className="small" role="status">{applied}</span>}
+      </div>
+    </section>
+  );
+}
+
 function newQuestion(index: number): Question {
   return {
     id: `q${index + 1}`,
@@ -50,7 +135,8 @@ function emptyLesson(order: number): Lesson {
 /** Field-by-field editor; the result always goes through validateLesson before saving. */
 function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
   const [draft, setDraft] = useState<Lesson>(initial);
-  const [mode, setMode] = useState<"form" | "json">("form");
+  const [tab, setTab] = useState<Tab>("info");
+  const mode = tab === "json" ? "json" : "form";
   const [json, setJson] = useState("");
   const [errors, setErrors] = useState<ValidationIssue[]>([]);
   const [saving, setSaving] = useState(false);
@@ -85,11 +171,16 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
 
   const setOptions = (index: number, options: QuestionOption[]) => setQuestion(index, { options } as Partial<Question>);
 
-  const switchMode = (next: "form" | "json") => {
+  const switchTab = (next: Tab) => {
+    if (next === tab) return;
     setErrors([]);
     if (next === "json") {
       setJson(JSON.stringify(draft, null, 2));
-      setMode("json");
+      setTab("json");
+      return;
+    }
+    if (tab !== "json") {
+      setTab(next);
       return;
     }
     const result = parseLessonFile(json);
@@ -98,7 +189,7 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
       return;
     }
     setDraft(result.lesson);
-    setMode("form");
+    setTab(next);
   };
 
   const persist = async (lesson: Lesson) => {
@@ -134,9 +225,20 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
 
   return (
     <>
-      <div className="segmented" role="group" aria-label="Chế độ soạn">
-        <button type="button" className={mode === "form" ? "is-active" : ""} aria-pressed={mode === "form"} onClick={() => mode !== "form" && switchMode("form")}>Biểu mẫu</button>
-        <button type="button" className={mode === "json" ? "is-active" : ""} aria-pressed={mode === "json"} onClick={() => mode !== "json" && switchMode("json")}>JSON</button>
+      <div className="segmented editor-tabs" role="tablist" aria-label="Phần của bài">
+        {TABS.map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            role="tab"
+            aria-selected={tab === t.id}
+            className={tab === t.id ? "is-active" : ""}
+            onClick={() => switchTab(t.id)}
+          >
+            {t.label}
+            {t.count ? <span className="tab-count">{t.count(draft)}</span> : null}
+          </button>
+        ))}
       </div>
 
       <IssueList title="❌ Chưa thể lưu" issues={errors} />
@@ -148,6 +250,7 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
         </div>
       ) : (
         <>
+          {tab === "info" && (
           <section className="panel form-grid" aria-label="Thông tin bài">
             <div className="field">
               <label htmlFor={`${uid}-id`}>Mã bài (id)</label>
@@ -211,7 +314,9 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
               />
             </div>
           </section>
+          )}
 
+          {tab === "vocabulary" && (
           <section className="panel" aria-labelledby={`${uid}-vocab`}>
             <h2 id={`${uid}-vocab`} className="panel-title">Từ vựng ({vocabulary.length})</h2>
             {vocabulary.map((v, i) => (
@@ -224,7 +329,10 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
             ))}
             <button type="button" className="btn btn-small btn-ghost" onClick={() => set("vocabulary", [...vocabulary, { word: "", meaning: "" }])}>+ Thêm từ</button>
           </section>
+          )}
 
+          {tab === "questions" && (
+          <>
           <h2 className="section-title">Câu hỏi ({draft.questions.length})</h2>
           <ol className="question-editor-list">
             {draft.questions.map((q, i) => {
@@ -336,7 +444,13 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
 
                   <div className="field">
                     <label htmlFor={`${uid}-q${i}-explain`}>Giải thích (explanation)</label>
-                    <input id={`${uid}-q${i}-explain`} className="text-input" value={q.explanation ?? ""} onChange={(e) => setQuestion(i, { explanation: e.target.value || undefined })} />
+                    {typeof q.explanation === "object" ? (
+                      <p id={`${uid}-q${i}-explain`} className="muted small">
+                        Giải thích có cấu trúc: “{q.explanation.summary}” — sửa các bước / whyNot trong tab JSON.
+                      </p>
+                    ) : (
+                      <input id={`${uid}-q${i}-explain`} className="text-input" value={q.explanation ?? ""} onChange={(e) => setQuestion(i, { explanation: e.target.value || undefined })} />
+                    )}
                   </div>
                 </li>
               );
@@ -345,6 +459,16 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
           <button type="button" className="btn btn-ghost" onClick={() => set("questions", [...draft.questions, newQuestion(draft.questions.length)])}>
             + Thêm câu hỏi
           </button>
+          </>
+          )}
+          {(tab === "theory" || tab === "examples" || tab === "guided") && (
+            <ContentJsonEditor
+              key={tab}
+              part={tab}
+              draft={draft}
+              onApply={(lesson) => setDraft(lesson)}
+            />
+          )}
         </>
       )}
 

@@ -1,3 +1,5 @@
+import { parseAnswerResults, type AnswerResult } from "./review.ts";
+
 /**
  * Pure attempt / statistics helpers (no Firebase), shared by the student
  * player and the admin pages.
@@ -26,6 +28,8 @@ export type Attempt = {
   score: number;
   durationMs: number;
   status: AttemptStatus;
+  /** Per-question results (attempts made before this field existed have none). */
+  answerResults: AnswerResult[];
 };
 
 export type UserExerciseStats = {
@@ -147,6 +151,7 @@ export function parseAttempt(
     score: num(raw.score),
     durationMs: num(raw.durationMs),
     status,
+    answerResults: parseAnswerResults(raw.answerResults),
   };
 }
 

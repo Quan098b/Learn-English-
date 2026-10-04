@@ -1,5 +1,6 @@
 import type { DatabaseReference } from "firebase/database";
 import { statsAfterComplete, statsAfterStart } from "./attempt-model.ts";
+import type { AnswerResult } from "./review.ts";
 import { getStudentSession, type FirebaseClient } from "./firebase.ts";
 
 export const ATTEMPTS_PATH = "attempts";
@@ -9,8 +10,16 @@ export type AttemptHandle = {
   attemptId: string;
   attemptNumber: number;
   startedAtClient: number;
-  complete(result: { correctAnswers: number; totalQuestions: number; score: number }): Promise<void>;
-  abandon(result: { correctAnswers: number; totalQuestions: number; score: number }): Promise<void>;
+  complete(result: AttemptResult): Promise<void>;
+  abandon(result: AttemptResult): Promise<void>;
+};
+
+/** answerResults (per question: given answer, right or wrong) feed the review. */
+export type AttemptResult = {
+  correctAnswers: number;
+  totalQuestions: number;
+  score: number;
+  answerResults?: AnswerResult[];
 };
 
 type Info = { exerciseId: string; exerciseTitle: string; userName: string; totalQuestions: number };
@@ -68,7 +77,7 @@ export async function startAttempt(info: Info): Promise<AttemptHandle | null> {
   let finished = false;
   const finish = async (
     status: "completed" | "abandoned",
-    result: { correctAnswers: number; totalQuestions: number; score: number },
+    result: AttemptResult,
   ) => {
     if (finished) return;
     finished = true;
@@ -79,6 +88,7 @@ export async function startAttempt(info: Info): Promise<AttemptHandle | null> {
       totalQuestions: result.totalQuestions,
       score: result.score,
       durationMs: Math.max(0, Date.now() - startedAtClient),
+      ...(result.answerResults ? { answerResults: result.answerResults } : {}),
     });
     if (status === "completed") {
       const completedAt = await serverNow(client);

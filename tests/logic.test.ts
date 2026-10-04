@@ -163,7 +163,7 @@ test("default lessons and template are valid schemaVersion 1 files", async () =>
       ["pronouns-01", "Đại từ nhân xưng", 10],
       ["basic-vocabulary-01", "Từ vựng cơ bản", 15],
       ["ipa-01", "Phiên âm IPA", 15],
-      ["fill-blank-01", "Điền từ", 10],
+      ["fill-blank-01", "Điền từ: Đại từ và am / is / are", 10],
     ],
   );
   const words = lessons[1].vocabulary?.map((v) => `${v.word} ${v.ipa} ${v.meaning}`);
@@ -403,8 +403,8 @@ test("speech: picks the exact locale, then any English voice", () => {
 });
 
 test("settings: defaults, accent and lesson override", () => {
-  assert.deepEqual(parseSettings(null), { accent: "US", autoPlay: false });
-  assert.deepEqual(parseSettings("{bad"), { accent: "US", autoPlay: false });
+  assert.deepEqual(parseSettings(null), { accent: "US", autoPlay: false, speed: "normal" });
+  assert.deepEqual(parseSettings("{bad"), { accent: "US", autoPlay: false, speed: "normal" });
   const uk = parseSettings(JSON.stringify({ accent: "UK", autoPlay: true }));
   assert.equal(speechLanguage(uk), "en-GB");
   assert.equal(speechLanguage(uk, "en-US"), "en-US");

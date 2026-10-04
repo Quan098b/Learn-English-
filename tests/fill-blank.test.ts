@@ -133,8 +133,8 @@ test("new fill_blank files need no options; default lesson 4 is fully typed", as
     assert.equal(questionOptions(q), null);
     assert.ok(!/^[A-D]$/.test(q.correctAnswer), `${q.id} still uses an option id`);
   }
-  const q1 = result.lesson.questions[0];
-  assert.equal(q1.display, "Lan is a girl. ___ is my friend.");
-  assert.equal(q1.correctAnswer, "She");
-  assert.ok(isAnswerCorrect(q1, "she"));
+  const lan = result.lesson.questions.find((q) => q.display === "Lan is a girl. ___ is my friend.");
+  assert.ok(lan);
+  assert.equal(lan.correctAnswer, "She");
+  assert.ok(isAnswerCorrect(lan, "she"));
 });

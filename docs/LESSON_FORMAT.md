@@ -26,6 +26,10 @@ xem preview rồi bấm **Import bài**. Không cần sửa code.
   "level": "A1",               // bắt buộc: A1 | A2 | B1 | B2 | C1 | C2
   "published": true,           // bắt buộc: true = học viên thấy, false = ẩn
   "audio": { … },              // tuỳ chọn — phát âm
+  "goals": [ … ],             // tuỳ chọn — "Bạn sẽ học gì?"
+  "theory": [ … ],            // tuỳ chọn — "Kiến thức cần biết" (giải thích quy tắc)
+  "examples": [ … ],          // tuỳ chọn — ví dụ có giải thích "tại sao"
+  "guidedPractice": [ … ],    // tuỳ chọn — luyện có gợi ý, KHÔNG tính điểm
   "vocabulary": [ … ],         // tuỳ chọn — danh sách từ cho mục "Học từ"
   "questions": [ … ]           // bắt buộc, 1–200 câu
 }
@@ -87,6 +91,84 @@ Website dùng giọng đọc của trình duyệt (Web Speech API). **Không c�
 | `example` | không | câu ví dụ |
 
 Bài không có `vocabulary` vẫn hợp lệ — nút "Học từ" sẽ không hiện.
+
+---
+
+## 3b. Nội dung học cho người mới bắt đầu
+
+Website dạy theo thứ tự **Giải thích quy tắc → Xem ví dụ → Luyện có hướng dẫn → Tự làm bài → Xem lại lỗi**.
+Mọi phần dưới đây đều **tuỳ chọn** — bài cũ không có vẫn chạy (học viên vào thẳng bài kiểm tra).
+Khi bài có các phần này, trang chủ hiện nút **Học bài** nổi bật trước **Làm bài**.
+
+Nguyên tắc viết nội dung:
+- Viết tiếng Việt đơn giản, như đang dạy người chưa biết gì.
+- Lần đầu dùng thuật ngữ (chủ ngữ, động từ, đại từ…) phải giải thích ngay: “Chủ ngữ là người hoặc vật mà câu đang nói đến.”
+- Không đưa vào bài kiểm tra kiến thức chưa giải thích trong `theory`/`examples`.
+- Sắp câu kiểm tra từ dễ đến khó: 1–3 rất dễ, 4–6 dễ, 7–8 trung bình, 9–10 vận dụng nhẹ.
+
+### `goals` — "Bạn sẽ học gì?"
+Mảng câu ngắn (≤ 20 câu, mỗi câu ≤ 200 ký tự): `["I đi với am", "He / She / It đi với is"]`.
+
+### `theory` — "Kiến thức cần biết"
+Mỗi phần là **một màn hình**. Mọi trường trừ `id`, `title` đều tuỳ chọn, nhưng phải có ít nhất một trong `body`, `items`, `table`, `tip`.
+
+| Trường | Ý nghĩa |
+|---|---|
+| `id` | duy nhất trong bài |
+| `title` | tiêu đề, ví dụ "Chủ ngữ là gì?" |
+| `body` | các đoạn giải thích (mảng chuỗi) |
+| `items` | thẻ từ: `{ term, meaning?, usage?, example?, exampleMeaning?, note? }` — ví dụ mỗi đại từ một thẻ; ví dụ có nút 🔊 |
+| `table` | `{ headers: [...], rows: [[...], ...] }` — mỗi hàng đúng số cột như `headers` |
+| `tip` | "Mẹo nhớ", xuống dòng bằng `\n` (vd `"I → am\nHe / She / It → is"`) |
+
+### `examples` — "Xem ví dụ"
+`{ id, context?, sentence, meaning?, steps?, breakdown?, speak? }`
+- `context`: câu đứng trước (vd `"Lan is a girl."`), `sentence`: câu chính (`"She is my friend."`).
+- `steps`: giải thích từng bước, mỗi bước một dòng (`"Lan → người nữ → She"`).
+- `breakdown`: tách câu thành phần `{ text, meaning?, role? }` — vd `{"text": "am", "meaning": "là", "role": "động từ to be — dùng với I"}`.
+- Nút **🔊 Nghe câu** đọc `speak` (mặc định = context + sentence).
+
+### `guidedPractice` — "Luyện cùng hướng dẫn"
+Câu **nhập chữ**, không tính điểm, không tạo lượt làm. Học viên bấm **Gợi ý** để mở **từng** gợi ý một;
+sai thì được giải thích và **Thử lại**.
+
+`{ id, display, prompt?, correctAnswer, acceptedAnswers?, hints, explanation?, speakSentence? }`
+- `display`: câu có `___`. `hints`: 1–6 gợi ý, đi từ gợi nhẹ đến gần đáp án (đừng lộ đáp án ở gợi ý đầu).
+- `speakSentence`: câu hoàn chỉnh, **chỉ đọc sau khi trả lời** (không lộ đáp án).
+
+### `explanation` có cấu trúc (dùng cho `questions` và `guidedPractice`)
+`explanation` có thể là một chuỗi (định dạng cũ) **hoặc** object:
+
+```jsonc
+"explanation": {
+  "summary": "My cat là một con vật số ít nên dùng It.",
+  "steps": [
+    "Tìm thứ đang được nói đến: My cat.",
+    "My cat là một con vật (chỉ một con).",
+    "Một con vật → It.",
+    "It đi với is → It is very cute."
+  ],
+  "whyNot": [
+    { "answer": "We", "reason": "We nghĩa là chúng tôi/chúng ta và đi với are." }
+  ]
+}
+```
+
+- `steps` hiện dưới tiêu đề **Tại sao?**.
+- `whyNot`: khi học viên trả lời đúng một trong các `answer` này (không phân biệt hoa/thường), website giải thích vì sao đáp án đó sai.
+  Với câu chọn đáp án, `answer` là **chữ của lựa chọn** (vd `"Chúng tôi"`), không phải `"B"`.
+
+### Từ vựng cho người mới
+Mỗi từ có thể thêm `usage` (dùng khi nào) và `exampleMeaning` (nghĩa câu ví dụ):
+`{ "word": "it", "ipa": "/ɪt/", "meaning": "nó", "usage": "Một đồ vật, sự vật hoặc con vật.", "example": "It is my cat.", "exampleMeaning": "Nó là con mèo của tôi.", "speak": "it" }`
+
+### Kết quả và ôn lỗi
+Sau bài kiểm tra, học viên thấy **Xem lại câu sai** (câu hỏi, câu trả lời của mình, đáp án, giải thích, vì sao sai),
+nút **Ôn câu sai** (chỉ làm lại các câu sai, không tính điểm) và **Làm lại câu này**.
+Mỗi lượt làm lưu `answerResults` (`questionId`, `answer`, `correct`) để admin xem số câu đúng/sai.
+
+Bài mẫu đầy đủ theo flow này: [`data/default-lessons/lesson-04.lesson.json`](../data/default-lessons/lesson-04.lesson.json)
+(Điền từ: Đại từ và am / is / are) và `lesson-01.lesson.json` (Đại từ nhân xưng).
 
 ---
 
@@ -307,6 +389,63 @@ Ví dụ chuẩn:
 ```
 
 ---
+
+### Ví dụ 4 — Bài cho người mới (đủ flow học → luyện → kiểm tra)
+
+```json
+{
+  "schemaVersion": 1,
+  "id": "this-that-01",
+  "order": 8,
+  "title": "This và That",
+  "level": "A1",
+  "published": false,
+  "audio": { "enabled": true, "mode": "tts" },
+  "goals": ["This dùng cho vật ở gần", "That dùng cho vật ở xa"],
+  "theory": [
+    {
+      "id": "t1",
+      "title": "This và That là gì?",
+      "body": [
+        "This và That dùng để chỉ một đồ vật hoặc người.",
+        "This = cái này (ở GẦN người nói). That = cái kia (ở XA người nói)."
+      ],
+      "items": [
+        { "term": "This", "meaning": "cái này", "usage": "vật ở gần mình, trong tay mình.", "example": "This is my pen.", "exampleMeaning": "Đây là bút của tôi." },
+        { "term": "That", "meaning": "cái kia", "usage": "vật ở xa mình.", "example": "That is your house.", "exampleMeaning": "Kia là nhà của bạn." }
+      ],
+      "tip": "Gần → This\nXa → That"
+    }
+  ],
+  "examples": [
+    { "id": "e1", "sentence": "This is my book.", "meaning": "Đây là sách của tôi.", "steps": ["Quyển sách ở trong tay → gần → This"] }
+  ],
+  "guidedPractice": [
+    {
+      "id": "g1",
+      "display": "Look at ___ book in my hand.",
+      "correctAnswer": "this",
+      "hints": ["Quyển sách ở đâu?", "Ở trong tay mình → rất gần.", "Gần → This."],
+      "explanation": { "summary": "Trong tay → gần → this.", "whyNot": [{ "answer": "that", "reason": "That dùng cho vật ở xa." }] }
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "type": "fill_blank",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
+      "display": "___ is my pen. (cái bút ở trong tay tôi)",
+      "correctAnswer": "This",
+      "acceptedAnswers": ["this"],
+      "explanation": {
+        "summary": "Cái bút ở trong tay → gần → This.",
+        "steps": ["Cái bút ở đâu? Trong tay tôi.", "Trong tay = gần.", "Gần → This."],
+        "whyNot": [{ "answer": "That", "reason": "That dùng cho vật ở xa, nhưng cái bút đang ở trong tay." }]
+      }
+    }
+  ]
+}
+```
 
 ## 6. Quy trình thêm bài mới
 

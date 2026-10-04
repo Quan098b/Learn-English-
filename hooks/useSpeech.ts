@@ -5,9 +5,10 @@ import {
   getServerSettingsSnapshot,
   getSettingsSnapshot,
   speechLanguage,
+  speechRate,
   subscribeSettings,
 } from "../lib/settings";
-import { DEFAULT_RATE, isSpeechSupported, speakEnglish } from "../lib/speech";
+import { isSpeechSupported, speakEnglish } from "../lib/speech";
 import type { LessonAudio } from "../lib/lesson-schema";
 
 const noopSubscribe = () => () => {};
@@ -26,7 +27,7 @@ export function useSpeech(audio?: LessonAudio) {
   const supported = useSyncExternalStore(noopSubscribe, isSpeechSupported, () => false);
   const enabled = audio?.enabled !== false;
   const language = speechLanguage(settings, audio?.language);
-  const rate = audio?.rate ?? DEFAULT_RATE;
+  const rate = speechRate(settings, audio?.rate);
 
   const speak = useCallback(
     (text: string) => speakEnglish(text, { language, rate, pitch: 1, volume: 1 }),
