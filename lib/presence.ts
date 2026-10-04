@@ -36,6 +36,8 @@ export function startPresence(
 ): PresenceHandle {
   let disposed = false;
   let connected = false;
+  /** Fields the server currently holds for this session (null = needs a full write). */
+  let written: Fields | null = null;
   let current: Fields = { name, ...activityFields(initialActivity) };
   let node: DatabaseReference | null = null;
   let client: FirebaseClient | null = null;
@@ -70,28 +72,34 @@ export function startPresence(
         (snapshot) => {
           if (snapshot.val() !== true) {
             connected = false;
+            written = null;
             onStatus("offline");
             return;
           }
+          let snapshotWritten: Fields | null = null;
           fb.onDisconnect(presenceNode)
             .remove()
             .then(() => {
               if (disposed) return;
+              snapshotWritten = current;
               return Promise.all([
                 fb.set(presenceNode, {
                   online: true,
-                  ...current,
+                  ...snapshotWritten,
                   connectedAt: fb.serverTimestamp(),
                   lastSeen: fb.serverTimestamp(),
                   updatedAt: fb.serverTimestamp(),
                 }),
-                fb.update(profile, { name: current.name, lastActiveAt: fb.serverTimestamp() }),
+                fb.update(profile, { name: snapshotWritten.name, lastActiveAt: fb.serverTimestamp() }),
               ]);
             })
             .then(() => {
-              if (disposed) return;
+              if (disposed || !snapshotWritten) return;
+              written = snapshotWritten;
               connected = true;
               onStatus("online");
+              // Activity may have changed while the full write was in flight.
+              flush();
             })
             .catch(fail);
         },
@@ -105,14 +113,20 @@ export function startPresence(
     })
     .catch(fail);
 
-  const push = (next: Fields) => {
+  /**
+   * Sends what differs between `current` and what the server last accepted.
+   * Diffing against the server copy (not the previous local value) means a
+   * change made while offline or during the initial write is never lost.
+   */
+  function flush() {
+    if (!connected || !node || !client || !written) return;
+    const base = written;
     const changes: Record<string, unknown> = {};
-    for (const key of Object.keys(next) as (keyof Fields)[]) {
-      if (next[key] !== current[key]) changes[key] = next[key];
+    for (const key of Object.keys(current) as (keyof Fields)[]) {
+      if (current[key] !== base[key]) changes[key] = current[key];
     }
-    current = next;
-    // While offline the full record is rewritten on reconnect anyway.
-    if (!connected || !node || !client || Object.keys(changes).length === 0) return;
+    if (Object.keys(changes).length === 0) return;
+    written = current;
     const fb = client.dbSdk;
     fb.update(node, {
       ...changes,
@@ -120,16 +134,18 @@ export function startPresence(
       updatedAt: fb.serverTimestamp(),
     }).catch(fail);
     if ("name" in changes && userRef) {
-      fb.update(userRef, { name: next.name, lastActiveAt: fb.serverTimestamp() }).catch(fail);
+      fb.update(userRef, { name: current.name, lastActiveAt: fb.serverTimestamp() }).catch(fail);
     }
-  };
+  }
 
   return {
     setActivity(activity) {
-      push({ ...current, ...activityFields(activity) });
+      current = { ...current, ...activityFields(activity) };
+      flush();
     },
     setName(name) {
-      push({ ...current, name });
+      current = { ...current, name };
+      flush();
     },
     stop() {
       disposed = true;
