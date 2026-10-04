@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import {
   correctAnswerLabel,
   isAnswerCorrect,
+  FILL_BLANK_INSTRUCTION,
   questionOptions,
   type Lesson,
   type Question,
@@ -59,10 +60,17 @@ export function ExercisePlayer({
   const isLast = current === total;
   const options = questionOptions(question);
   const canSpeakNow = !speakRevealsAnswer(question) || answered;
-  const showDisplay = question.type !== "listen_choose" && question.display;
+  const isFill = question.type === "fill_blank";
+  // fill_blank: the sentence with "___" (display, or a legacy prompt that holds it);
+  // the instruction above it is fixed so old "Chọn từ đúng…" prompts never show.
+  const sentence = isFill
+    ? question.display ?? (question.prompt.includes("___") ? question.prompt : null)
+    : question.type === "listen_choose" ? null : question.display ?? null;
+  const heading = isFill ? FILL_BLANK_INSTRUCTION : question.prompt;
 
   const nextRef = useRef<HTMLButtonElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [typed, setTyped] = useState("");
   const inputId = useId();
 
@@ -70,11 +78,13 @@ export function ExercisePlayer({
     if (answered) nextRef.current?.focus();
   }, [answered]);
 
-  // New question: focus it (keyboard users keep their place) and optionally speak.
+  // New question: focus the answer box for fill_blank, otherwise the question
+  // (keyboard users keep their place); optionally speak.
   const { autoPlay, supported, enabled, speak } = speech;
   useEffect(() => {
-    headingRef.current?.focus();
     const q = lesson.questions[index];
+    if (q.type === "fill_blank") inputRef.current?.focus();
+    else headingRef.current?.focus();
     if (autoPlay && supported && enabled && q.speak && !speakRevealsAnswer(q)) {
       void speak(q.speak);
     }
@@ -124,7 +134,7 @@ export function ExercisePlayer({
       </div>
 
       <div className="question-card">
-        {showDisplay && <p className="question-focus" lang="en">{question.display}</p>}
+        {sentence && <p className="question-focus" lang="en">{sentence}</p>}
         {question.type === "listen_choose" && question.speak && (
           <div className="listen-box">
             <SpeechButton
@@ -140,7 +150,7 @@ export function ExercisePlayer({
           </div>
         )}
         <h2 id="question-heading" ref={headingRef} tabIndex={-1} className="question-prompt">
-          {question.prompt}
+          {heading}
         </h2>
 
         {question.type !== "listen_choose" && (question.speak || question.speakSentence) && canSpeakNow && (
@@ -179,6 +189,7 @@ export function ExercisePlayer({
             <input
               key={question.id}
               id={inputId}
+              ref={inputRef}
               className={`text-input ${answered ? (correct ? "is-correct" : "is-wrong") : ""}`}
               value={answered ? answer : typed}
               onChange={(event) => setTyped(event.target.value)}
@@ -186,7 +197,7 @@ export function ExercisePlayer({
               autoComplete="off"
               autoCapitalize="off"
               spellCheck={false}
-              placeholder="Gõ từ còn thiếu…"
+              placeholder="Nhập từ còn thiếu..."
               lang="en"
             />
             {!answered && (

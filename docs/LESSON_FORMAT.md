@@ -103,9 +103,9 @@ Mọi câu hỏi có các trường chung:
 | `speak` | không* | từ được đọc khi bấm **🔊 Nghe** (≤ 200 ký tự, không ghi IPA). *Bắt buộc với `listen_choose` |
 | `speakSentence` | không | cả câu được đọc khi bấm **🔊 Nghe câu** (≤ 500) |
 | `explanation` | không | giải thích hiện sau khi trả lời |
-| `options` | tuỳ loại | danh sách lựa chọn `{ "id": "A", "text": "…" }`, 2–8 lựa chọn, `id` không trùng |
-| `correctAnswer` | có | **id của lựa chọn đúng** (vd `"B"`), hoặc **chữ đúng** với câu gõ chữ |
-| `acceptedAnswers` | không | chỉ cho `fill_blank` gõ chữ: các cách viết khác vẫn tính đúng |
+| `options` | tuỳ loại | chỉ cho các câu **chọn đáp án**: `{ "id": "A", "text": "…" }`, 2–8 lựa chọn, `id` không trùng. **Không dùng cho `fill_blank`** |
+| `correctAnswer` | có | câu chọn: **id của lựa chọn đúng** (vd `"B"`). `fill_blank`: **từ đúng** (vd `"She"`) |
+| `acceptedAnswers` | không | chỉ cho `fill_blank`: các cách viết khác vẫn tính đúng |
 
 ### Các loại câu (`type`)
 
@@ -116,12 +116,35 @@ Mọi câu hỏi có các trường chung:
 | `meaning_to_word` | Thấy nghĩa → chọn từ tiếng Anh | có | sau khi trả lời (để không lộ đáp án) |
 | `ipa_to_word` | Thấy IPA → chọn từ | có | sau khi trả lời |
 | `listen_choose` | Nghe → chọn từ (chữ `display` bị ẩn) | có | luôn — nút lớn "Nghe lại" |
-| `fill_blank` | Điền vào `___` — chọn **hoặc** gõ | không bắt buộc | sau khi trả lời |
+| `fill_blank` | **Gõ** từ còn thiếu vào ô nhập (không có A/B/C/D) | **không** | sau khi trả lời |
 
-**`fill_blank`:**
-- Có `options` → học viên chọn; `correctAnswer` là **id** lựa chọn.
-- Không có `options` → học viên gõ chữ; `correctAnswer` là **từ đúng**. So sánh không phân biệt hoa/thường,
-  bỏ khoảng trắng thừa và dấu `.` `!` `?` ở cuối. Thêm `acceptedAnswers` nếu có nhiều cách đúng.
+**`fill_blank` = nhập chữ trực tiếp.** Học viên thấy câu có `___`, một ô "Nhập từ còn thiếu..." và nút **Kiểm tra** (Enter cũng được).
+
+- `display`: câu có chỗ trống `___` (hiện to).
+- `prompt`: hướng dẫn; màn hình học viên luôn hiện "Nhập từ còn thiếu vào chỗ trống."
+- `correctAnswer`: **từ đúng**, ví dụ `"She"`.
+- `acceptedAnswers` (tuỳ chọn): các cách viết khác cũng đúng.
+- So sánh **không phân biệt hoa/thường**, bỏ khoảng trắng đầu/cuối và dấu `.` `!` `?` ở cuối:
+  `she`, `She`, `SHE`, `"  She  "` đều đúng.
+- **Không có `options`.**
+
+Ví dụ chuẩn:
+
+```jsonc
+{
+  "id": "q1",
+  "type": "fill_blank",
+  "prompt": "Nhập từ còn thiếu vào chỗ trống.",
+  "display": "Lan is a girl. ___ is my friend.",
+  "correctAnswer": "She",
+  "acceptedAnswers": ["she"],
+  "explanation": "Lan là nữ nên dùng She."
+}
+```
+
+> **Định dạng cũ:** file/bài cũ có `fill_blank` kèm `options` và `correctAnswer: "B"` vẫn đọc được —
+> hệ thống tự đổi thành đáp án chữ (chữ của lựa chọn B), bỏ các lựa chọn và báo cảnh báo khi import.
+> Hãy dùng định dạng mới cho file mới.
 
 ### Lỗi thường gặp (website sẽ báo đúng câu và cách sửa)
 
@@ -199,7 +222,7 @@ Mọi câu hỏi có các trường chung:
 }
 ```
 
-### Ví dụ 2 — Điền từ (vừa chọn vừa gõ)
+### Ví dụ 2 — Điền từ (nhập chữ)
 
 ```json
 {
@@ -214,21 +237,16 @@ Mọi câu hỏi có các trường chung:
     {
       "id": "q1",
       "type": "fill_blank",
-      "prompt": "Chọn từ đúng để điền vào chỗ trống.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "I ___ a student.",
       "speakSentence": "I am a student.",
-      "options": [
-        { "id": "A", "text": "am" },
-        { "id": "B", "text": "is" },
-        { "id": "C", "text": "are" }
-      ],
-      "correctAnswer": "A",
+      "correctAnswer": "am",
       "explanation": "Đi với I dùng am."
     },
     {
       "id": "q2",
       "type": "fill_blank",
-      "prompt": "Gõ từ còn thiếu.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "They ___ my friends.",
       "speakSentence": "They are my friends.",
       "correctAnswer": "are",

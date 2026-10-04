@@ -215,18 +215,31 @@ function validateQuestion(c: Collector, raw: unknown, index: number, ids: Set<st
         acceptedAnswers = (list as string[]).map((a) => a.trim());
       }
     }
-    if (options && options.length > 0 && correct && !options.some((o) => o.id === correct)) {
-      c.error(where, `correctAnswer "${correct}" không tồn tại trong options.`, `Khi có "options", "correctAnswer" phải là id của một lựa chọn (${options.map((o) => o.id).join(", ")}).`);
+    // Legacy format: A/B/C/D options with correctAnswer = option id. Still
+    // readable (old lessons in Firebase / old files) but normalised to a
+    // typed answer: the option text becomes correctAnswer, options are dropped.
+    let expected = correct;
+    if (options && options.length > 0) {
+      const legacy = options.find((o) => o.id === correct);
+      if (legacy) expected = legacy.text;
+      c.warn(
+        where,
+        `fill_blank dùng "options" là định dạng cũ; đã tự đổi thành nhập chữ với đáp án "${expected}".`,
+        `Xoá "options" và đặt "correctAnswer": "${expected}".`,
+      );
+    }
+    if (expected.length > LIMITS.answerText) {
+      c.error(where, `"correctAnswer" quá dài.`, `Tối đa ${LIMITS.answerText} ký tự.`);
     }
     if (prompt && !prompt.includes("___") && !display?.includes("___")) {
-      c.warn(where, `Câu điền từ không có chỗ trống "___".`, `Thêm "___" vào "prompt" hoặc "display".`);
+      c.warn(where, `Câu điền từ không có chỗ trống "___".`, `Thêm "___" vào "display" (hoặc "prompt").`);
     }
+    const extra = (acceptedAnswers ?? []).filter((a) => a !== expected);
     question = {
       ...base,
       type: "fill_blank",
-      correctAnswer: correct,
-      ...(acceptedAnswers?.length ? { acceptedAnswers } : {}),
-      ...(options?.length ? { options } : {}),
+      correctAnswer: expected,
+      ...(extra.length ? { acceptedAnswers: extra } : {}),
     };
   } else {
     if (raw.acceptedAnswers !== undefined) {

@@ -3,7 +3,7 @@
   "id": "fill-blank-01",
   "order": 4,
   "title": "Điền từ",
-  "description": "Chọn hoặc gõ từ phù hợp để hoàn thành câu.",
+  "description": "Gõ từ còn thiếu để hoàn thành câu.",
   "level": "A1",
   "published": true,
   "audio": {
@@ -107,223 +107,100 @@
     {
       "id": "q1",
       "type": "fill_blank",
-      "prompt": "Chọn từ đúng để điền vào chỗ trống.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "Lan is a girl. ___ is my friend.",
       "speakSentence": "Lan is a girl. She is my friend.",
-      "options": [
-        {
-          "id": "A",
-          "text": "He"
-        },
-        {
-          "id": "B",
-          "text": "She"
-        },
-        {
-          "id": "C",
-          "text": "It"
-        },
-        {
-          "id": "D",
-          "text": "They"
-        }
+      "correctAnswer": "She",
+      "acceptedAnswers": [
+        "she"
       ],
-      "correctAnswer": "B",
       "explanation": "Lan là con gái nên dùng She."
     },
     {
       "id": "q2",
       "type": "fill_blank",
-      "prompt": "Chọn từ đúng để điền vào chỗ trống.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "Tom is a boy. ___ is my brother.",
       "speakSentence": "Tom is a boy. He is my brother.",
-      "options": [
-        {
-          "id": "A",
-          "text": "He"
-        },
-        {
-          "id": "B",
-          "text": "She"
-        },
-        {
-          "id": "C",
-          "text": "We"
-        },
-        {
-          "id": "D",
-          "text": "It"
-        }
+      "correctAnswer": "He",
+      "acceptedAnswers": [
+        "he"
       ],
-      "correctAnswer": "A",
       "explanation": "Tom là con trai nên dùng He."
     },
     {
       "id": "q3",
       "type": "fill_blank",
-      "prompt": "Chọn từ đúng để điền vào chỗ trống.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "My cat is small. ___ is very cute.",
       "speakSentence": "My cat is small. It is very cute.",
-      "options": [
-        {
-          "id": "A",
-          "text": "He"
-        },
-        {
-          "id": "B",
-          "text": "They"
-        },
-        {
-          "id": "C",
-          "text": "It"
-        },
-        {
-          "id": "D",
-          "text": "She"
-        }
+      "correctAnswer": "It",
+      "acceptedAnswers": [
+        "it"
       ],
-      "correctAnswer": "C",
       "explanation": "Con mèo là con vật nên dùng It."
     },
     {
       "id": "q4",
       "type": "fill_blank",
-      "prompt": "Chọn từ đúng để điền vào chỗ trống.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "Nam and Hoa are students. ___ are in class 6A.",
       "speakSentence": "Nam and Hoa are students. They are in class 6A.",
-      "options": [
-        {
-          "id": "A",
-          "text": "We"
-        },
-        {
-          "id": "B",
-          "text": "He"
-        },
-        {
-          "id": "C",
-          "text": "It"
-        },
-        {
-          "id": "D",
-          "text": "They"
-        }
+      "correctAnswer": "They",
+      "acceptedAnswers": [
+        "they"
       ],
-      "correctAnswer": "D",
       "explanation": "Nam và Hoa là hai người (không có mình) nên dùng They."
     },
     {
       "id": "q5",
       "type": "fill_blank",
-      "prompt": "Chọn từ đúng để điền vào chỗ trống.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "My friends and I like English. ___ study together.",
       "speakSentence": "My friends and I like English. We study together.",
-      "options": [
-        {
-          "id": "A",
-          "text": "They"
-        },
-        {
-          "id": "B",
-          "text": "We"
-        },
-        {
-          "id": "C",
-          "text": "He"
-        },
-        {
-          "id": "D",
-          "text": "She"
-        }
+      "correctAnswer": "We",
+      "acceptedAnswers": [
+        "we"
       ],
-      "correctAnswer": "B",
       "explanation": "\"My friends and I\" gồm cả mình nên dùng We."
     },
     {
       "id": "q6",
       "type": "fill_blank",
-      "prompt": "Chọn từ đúng để điền vào chỗ trống.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "___ am a student.",
       "speakSentence": "I am a student.",
-      "options": [
-        {
-          "id": "A",
-          "text": "I"
-        },
-        {
-          "id": "B",
-          "text": "You"
-        },
-        {
-          "id": "C",
-          "text": "He"
-        },
-        {
-          "id": "D",
-          "text": "They"
-        }
+      "correctAnswer": "I",
+      "acceptedAnswers": [
+        "i"
       ],
-      "correctAnswer": "A",
       "explanation": "Đi với \"am\" là I."
     },
     {
       "id": "q7",
       "type": "fill_blank",
-      "prompt": "Chọn từ đúng để điền vào chỗ trống.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "\"Are you OK?\" — \"___, I am fine.\"",
       "speakSentence": "Are you OK?\" — \"Yes, I am fine.",
-      "options": [
-        {
-          "id": "A",
-          "text": "No"
-        },
-        {
-          "id": "B",
-          "text": "Please"
-        },
-        {
-          "id": "C",
-          "text": "Yes"
-        },
-        {
-          "id": "D",
-          "text": "Thanks"
-        }
+      "correctAnswer": "Yes",
+      "acceptedAnswers": [
+        "yes"
       ],
-      "correctAnswer": "C",
       "explanation": "Câu trả lời đồng ý: Yes."
     },
     {
       "id": "q8",
       "type": "fill_blank",
-      "prompt": "Chọn từ đúng để điền vào chỗ trống.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "Look at ___ book in my hand.",
       "speakSentence": "Look at this book in my hand.",
-      "options": [
-        {
-          "id": "A",
-          "text": "there"
-        },
-        {
-          "id": "B",
-          "text": "they"
-        },
-        {
-          "id": "C",
-          "text": "that"
-        },
-        {
-          "id": "D",
-          "text": "this"
-        }
-      ],
-      "correctAnswer": "D",
+      "correctAnswer": "this",
       "explanation": "Quyển sách ở trong tay mình (gần) nên dùng this."
     },
     {
       "id": "q9",
       "type": "fill_blank",
-      "prompt": "Gõ từ còn thiếu vào chỗ trống.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "Can you help me, ___?",
       "speakSentence": "Can you help me, please?",
       "correctAnswer": "please",
@@ -332,10 +209,13 @@
     {
       "id": "q10",
       "type": "fill_blank",
-      "prompt": "Gõ từ còn thiếu vào chỗ trống.",
+      "prompt": "Nhập từ còn thiếu vào chỗ trống.",
       "display": "___ a lot for your help!",
       "speakSentence": "Thanks a lot for your help!",
       "correctAnswer": "Thanks",
+      "acceptedAnswers": [
+        "thanks"
+      ],
       "explanation": "Cảm ơn: Thanks."
     }
   ]

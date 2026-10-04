@@ -72,10 +72,12 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
 
   const changeType = (index: number, type: QuestionType) => {
     const q = draft.questions[index];
-    const options = "options" in q && q.options ? q.options : LETTERS.slice(0, 4).map((id) => ({ id, text: "" }));
     if (type === "fill_blank") {
-      setQuestion(index, { type, options } as Partial<Question>);
+      // Typed answer only: keep the text of the previously correct option, drop options.
+      const answer = q.type === "fill_blank" ? q.correctAnswer : q.options.find((o) => o.id === q.correctAnswer)?.text ?? "";
+      setQuestion(index, { type, options: undefined, correctAnswer: answer } as Partial<Question>);
     } else {
+      const options = q.type !== "fill_blank" ? q.options : LETTERS.slice(0, 4).map((id) => ({ id, text: "" }));
       const correct = options.some((o) => o.id === q.correctAnswer) ? q.correctAnswer : options[0].id;
       setQuestion(index, { type, options, correctAnswer: correct, acceptedAnswers: undefined } as Partial<Question>);
     }
@@ -226,8 +228,8 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
           <h2 className="section-title">Câu hỏi ({draft.questions.length})</h2>
           <ol className="question-editor-list">
             {draft.questions.map((q, i) => {
-              const options = "options" in q && q.options ? q.options : null;
-              const typed = q.type === "fill_blank" && !options?.length;
+              const typed = q.type === "fill_blank";
+              const options = q.type === "fill_blank" ? null : q.options;
               return (
                 <li key={i} className="panel question-editor">
                   <div className="question-editor-head">
@@ -253,11 +255,11 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
                       </select>
                     </div>
                     <div className="field span-2">
-                      <label htmlFor={`${uid}-q${i}-prompt`}>Câu hỏi (prompt)</label>
+                      <label htmlFor={`${uid}-q${i}-prompt`}>{typed ? "Câu (hướng dẫn)" : "Câu hỏi (prompt)"}</label>
                       <input id={`${uid}-q${i}-prompt`} className="text-input" value={q.prompt} onChange={(e) => setQuestion(i, { prompt: e.target.value })} />
                     </div>
                     <div className="field">
-                      <label htmlFor={`${uid}-q${i}-display`}>Chữ hiển thị lớn (display)</label>
+                      <label htmlFor={`${uid}-q${i}-display`}>{typed ? "Câu có chỗ trống (dùng ___)" : "Chữ hiển thị lớn (display)"}</label>
                       <input id={`${uid}-q${i}-display`} className="text-input" value={q.display ?? ""} onChange={(e) => setQuestion(i, { display: e.target.value || undefined })} />
                     </div>
                     <div className="field">
@@ -269,21 +271,6 @@ function LessonForm({ initial, isNew }: { initial: Lesson; isNew: boolean }) {
                       <input id={`${uid}-q${i}-sentence`} className="text-input" value={q.speakSentence ?? ""} onChange={(e) => setQuestion(i, { speakSentence: e.target.value || undefined })} />
                     </div>
                   </div>
-
-                  {q.type === "fill_blank" && (
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={!typed}
-                        onChange={(e) =>
-                          e.target.checked
-                            ? setQuestion(i, { options: LETTERS.slice(0, 4).map((id) => ({ id, text: "" })), correctAnswer: "A", acceptedAnswers: undefined } as Partial<Question>)
-                            : setQuestion(i, { options: undefined, correctAnswer: "" } as Partial<Question>)
-                        }
-                      />
-                      <span>Cho chọn đáp án (bỏ chọn = học viên gõ chữ)</span>
-                    </label>
-                  )}
 
                   {typed ? (
                     <div className="form-grid">

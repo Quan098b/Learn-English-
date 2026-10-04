@@ -67,14 +67,17 @@ export type ChoiceQuestion = QuestionBase & {
   correctAnswer: string;
 };
 
+/** Always a typed answer: the learner types the missing word. */
 export type FillBlankQuestion = QuestionBase & {
   type: "fill_blank";
-  /**
-   * The expected word. With `options` it is the id of the correct option;
-   * without options the learner types it and it is compared case-insensitively.
-   */
+  /** The expected word, compared case-insensitively and trimmed. */
   correctAnswer: string;
   acceptedAnswers?: string[];
+  /**
+   * @deprecated Legacy data only (old lessons stored A/B/C/D options with
+   * `correctAnswer` = option id). Never rendered; used to resolve the
+   * expected text. New lessons and the editor never write it.
+   */
   options?: QuestionOption[];
 };
 
@@ -124,10 +127,27 @@ export function isChoiceQuestion(question: Question): question is ChoiceQuestion
   return (CHOICE_QUESTION_TYPES as readonly string[]).includes(question.type);
 }
 
-/** Options shown to the learner, or null when the answer is typed. */
+/** Options shown to the learner; always null for fill_blank (typed answer). */
 export function questionOptions(question: Question): QuestionOption[] | null {
-  if (isChoiceQuestion(question)) return question.options;
-  return question.options && question.options.length > 0 ? question.options : null;
+  return isChoiceQuestion(question) ? question.options : null;
+}
+
+/** Instruction shown above a fill_blank, independent of legacy prompts. */
+export const FILL_BLANK_INSTRUCTION = "Nhập từ còn thiếu vào chỗ trống.";
+
+/**
+ * The text expected for a fill_blank. Legacy questions stored the id of an
+ * option ("B") — resolve it to that option's text ("She").
+ */
+export function fillBlankAnswer(question: FillBlankQuestion): string {
+  const legacy = question.options?.find((o) => o.id === question.correctAnswer);
+  return legacy ? legacy.text : question.correctAnswer;
+}
+
+/** Every typed answer accepted for a fill_blank (correct answer first). */
+export function fillBlankAcceptedAnswers(question: FillBlankQuestion): string[] {
+  const answers = [fillBlankAnswer(question), ...(question.acceptedAnswers ?? [])];
+  return [...new Set(answers.map((a) => a.trim()).filter(Boolean))];
 }
 
 export function normalizeAnswer(text: string): string {
@@ -141,17 +161,15 @@ export function normalizeAnswer(text: string): string {
 
 /** `answer` is an option id for choice questions, or typed text otherwise. */
 export function isAnswerCorrect(question: Question, answer: string): boolean {
-  if (questionOptions(question)) return answer === question.correctAnswer;
-  const fill = question as FillBlankQuestion;
-  const accepted = [fill.correctAnswer, ...(fill.acceptedAnswers ?? [])].map(normalizeAnswer);
-  return accepted.includes(normalizeAnswer(answer));
+  if (question.type !== "fill_blank") return answer === question.correctAnswer;
+  const typed = normalizeAnswer(answer);
+  return typed !== "" && fillBlankAcceptedAnswers(question).map(normalizeAnswer).includes(typed);
 }
 
-/** Human-readable correct answer for feedback. */
+/** Human-readable correct answer for feedback ("She", never a legacy "B"). */
 export function correctAnswerLabel(question: Question): string {
-  const options = questionOptions(question);
-  if (!options) return question.correctAnswer;
-  const option = options.find((o) => o.id === question.correctAnswer);
+  if (question.type === "fill_blank") return fillBlankAnswer(question);
+  const option = question.options.find((o) => o.id === question.correctAnswer);
   return option ? `${option.id}. ${option.text}` : question.correctAnswer;
 }
 
